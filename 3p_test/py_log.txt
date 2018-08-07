@@ -1,0 +1,38 @@
+ Port = /dev/ttyXRUSB1
+=================================== Start tests ==================================================
+ATE
+OK
+======================== Test NCAT ============================================
+AT+SQNSD=1,0,1233,"192.168.3.1"
+CONNECT
+>>> Connect!!!
+1 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (800ms) bbb
+2 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (820ms) bbb
+3 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (840ms) bbb
+4 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (860ms) bbb
+5 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (880ms) bbb
+6 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (900ms) bbb
+7 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (920ms) bbb
+8 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (940ms) bbb
+9 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (960ms) bbb
+10 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (980ms) bbb
+11 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1000ms) bbb
+12 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1020ms) bbb
+13 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1040ms) bbb
+14 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1060ms) bbb
+15 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1080ms) bbb
+16 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1100ms) bbb
+17 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1120ms) bbb
+18 Stay in data mode >>> aaa (800ms) + (780ms) + (780ms) + (1140ms) bbb
+19 Stay in data mode >>> aaa (800ms) + (800ms) + (800ms) + (800ms) bbb
+20 Stay in data mode >>> aaa (800ms) + (800ms) + (800ms) + (820ms) bbb
+21 Stay in data mode >>> aaa (800ms) + (800ms) + (800ms) + (840ms) bbb
+Close connection ...
+
+OK
+
+AT+SQNSH=1
+OK
+ATH
+OK
+===================== Tests end ============================
