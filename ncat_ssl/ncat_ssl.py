@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+############################
+#  NCAT SSL Transparency   #
+#  Maksym V                #
+#  2018-08-14              #
+#                          #
+############################
 
 import serial
 import time
@@ -151,7 +160,7 @@ try:
 	'''
 	test = subprocess.Popen(["ping","-W","2","-c", "1", "192.168.1.70"], stdout=subprocess.PIPE)
 	output = test.communicate()[0]
-
+	print(output)
 
 finally:
 	print('\r\n')		
