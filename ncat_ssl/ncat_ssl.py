@@ -49,6 +49,8 @@ comm_7 = 'cbe"cat /fs/sqn/etc/sqn_certs/0.crt"' + r
 comm_8 = 'AT+SQNSPCFG=1,2,"0x8C;0x8D;0xAE;0xAF",,,,,"AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982","Client_identity"' + r
 comm_9 = 'AT+SQNSS' + r
 comm_10 = '' + r
+comm_11 = 'AT+SQNSI' + r
+comm_12 = 'cbe"netstat"' + r
 
 
 try:
@@ -185,9 +187,6 @@ try:
 					to_UE('channel0_at',spec_comm)  
 					from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-			to_UE('channel0_at',comm_9)  # send at+sqnss
-			from_UE(5, 'OK', 'channel0_at', 1, 1)
-
 		#====================================================================================================================
 	
 	def ncat_close_sockets():
@@ -206,10 +205,20 @@ try:
 				to_UE('channel0_at',spec_comm)  
 				from_UE(5, 'OK', 'channel0_at', 1, 1)		
 
-			to_UE('channel0_at',comm_9)  
-			from_UE(5, 'OK', 'channel0_at', 1, 1)
-
 		#====================================================================================================================
+
+	def ncat_info():
+		print('======================= NCAT info =========================')
+		to_UE('channel0_at',comm_9)  # send at+sqnss
+		from_UE(5, 'OK', 'channel0_at', 1, 1)	
+
+		to_UE('channel0_at',comm_11)  # send at+sqnss
+		from_UE(5, 'OK', 'channel0_at', 1, 1)
+
+		to_UE('channel2_console',comm_12)  # send at+sqnss
+		from_UE(5, '->', 'channel2_console', 1, 1)
+
+		#exec_command('netstat -nlp')
 
 	def ssl_open_server(proto):
 
@@ -283,33 +292,34 @@ try:
 		global proc6
 		global proc7
 
-		if proc1.poll() == None:
+		if proc1 != '' and proc1.poll() == None:
 			proc1.terminate()
 
-		if proc2.poll() == None:
+		if proc2 != '' and proc2.poll() == None:
 			proc2.terminate()
 
-		if proc3.poll() == None:
+		if proc3 != '' and proc3.poll() == None:
 			proc3.terminate()
 
-		if proc4.poll() == None:
+		if proc4 != '' and proc4.poll() == None:
 			proc4.terminate()
 
-		if proc5.poll() == None:
+		if proc5 != '' and proc5.poll() == None:
 			proc5.terminate()
 
-		if proc6.poll() == None:
+		if proc6 != '' and proc6.poll() == None:
 			proc6.terminate()
 
 	def exec_command(command):
-		command = '"' + command.replace(' ', '","') + '"'
 		ON_POSIX = 'posix' in sys.builtin_module_names
-		temp_proc = subprocess.Popen([command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		temp_out = temp_proc.communication()
+		tmp_command = "'" + command.replace(" ", "' '") + "'"
+
+		temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
+		temp_out = temp_proc.communicate()[0]
+
 		if temp_proc.poll() == None:
 			temp_proc.terminate()		
 		return temp_out
-
 #====================================================================================================================
 #	Uarts connection
 #====================================================================================================================
@@ -360,7 +370,7 @@ try:
 	to_UE('channel0_at',comm_3)  # ============== send AT+CPSMS=1,,,"10100101","00000000"
 	from_UE(2, 'OK', 'channel0_at', 1, 1)
 
-	to_UE('channel2_console',comm_4)  # ============== send
+	to_UE('channel2_console',comm_4)  # ============== send cbe"setextwake b=0x800 m=0x3FFF"
 	from_UE(2, '->', 'channel2_console', 1, 1)
 #====================================================================================================================
 
@@ -418,7 +428,7 @@ try:
 		print('====================================================================')
 
 		ncat_open_sockets(proto)
-
+		ncat_info()
 		gotoPSPM(30)
 		time.sleep(5)
 
@@ -426,11 +436,14 @@ try:
 		time.sleep(5)
 
 		channelDetection()
+		ncat_info()
 
 		ncat_close_sockets()
+		ncat_info()
+
 		time.sleep(5)
 
-		if proto == 1:          # Secure renegotiation not supported in openssl, so reopen needed
+		if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
 			ssl_close_server()
 			ssl_open_server(1)
 
