@@ -20,7 +20,7 @@ import Queue
 import signal
 import pathlib
 
-proto = 0 # tls=0, dtls =1
+proto = 1 # tls=0, dtls =1
 
 uart0_at = "/dev/ttyXRUSB0"
 uart0_at_speed = 921600
@@ -300,6 +300,16 @@ try:
 
 		if proc6.poll() == None:
 			proc6.terminate()
+
+	def exec_command(command):
+		command = '"' + command.replace(' ', '","') + '"'
+		ON_POSIX = 'posix' in sys.builtin_module_names
+		temp_proc = subprocess.Popen([command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		temp_out = temp_proc.communication()
+		if temp_proc.poll() == None:
+			temp_proc.terminate()		
+		return temp_out
+
 #====================================================================================================================
 #	Uarts connection
 #====================================================================================================================
@@ -402,7 +412,7 @@ try:
 
 	ssl_open_server(proto)
 
-	for i in range(0, 2):
+	for i in range(0, 10):
 		print('====================================================================')
 		print('                      Test loop = ' + str(i))
 		print('====================================================================')
@@ -419,6 +429,10 @@ try:
 
 		ncat_close_sockets()
 		time.sleep(5)
+
+		if proto == 1:          # Secure renegotiation not supported in openssl, so reopen needed
+			ssl_close_server()
+			ssl_open_server(1)
 
 	ssl_close_server()
 	time.sleep(3)
