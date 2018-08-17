@@ -218,7 +218,7 @@ try:
 		to_UE('channel2_console',comm_12)  # send at+sqnss
 		from_UE(5, '->', 'channel2_console', 1, 1)
 
-		#exec_command('netstat -nlp')
+		exec_command('netstat -nlp --inet')
 
 	def ssl_open_server(proto):
 
