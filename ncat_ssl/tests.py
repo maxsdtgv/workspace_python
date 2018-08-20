@@ -11,39 +11,55 @@ import signal
 import pathlib
 
 
-'''
-def exec_command(command):
-	ON_POSIX = 'posix' in sys.builtin_module_names
-	command = '"' + command.replace(' ', '","') + '"'
+uart2_console = "/dev/ttyXRUSB2"
+uart2_console_speed = 115200
 
-	temp_proc = subprocess.Popen(["ll"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=False)
-	temp_out = temp_proc.communication()[0]
-	if temp_proc.poll() == None:
-		temp_proc.terminate()		
-	return temp_out
+iii = ''
+def queue_output(out, nqueue):
+	#for line in iter(out.readline(), b''):
+	global iii
+	while True:	#	nqueue.put(line)
 
-text = exec_command('netstat -nlp')
-print text
+		for line in iter(out.readline, b''):
+			nqueue.put(line.replace('\r','').replace('\n',''))
+			time.sleep(.2)
+		if iii != '':
+			out.write(iii)
+			iii = ''
+		#out.close()
 
-ON_POSIX = 'posix' in sys.builtin_module_names
-temp_proc1 = subprocess.Popen(["ls"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=False)
-temp_out = temp_proc1.communicate()[0]
-if temp_proc1.poll() == None:
-	temp_proc1.terminate()		
-print temp_out
-'''
+try:
 
-def exec_command(command):
-	ON_POSIX = 'posix' in sys.builtin_module_names
 
-	tmp_command = "'" + command.replace(" ", "' '") + "'"
-	print ('commanddd=' + tmp_command)
 
-	temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
-	temp_out = temp_proc.communicate()[0]
+	channel2_console = serial.Serial(uart2_console, uart2_console_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
 
-	if temp_proc.poll() == None:
-		temp_proc.terminate()		
-	return temp_out
+	print('=================== Threads for uart readings')
 
-print(exec_command('netstat -nlp'))
+	queue_console = Queue.Queue()
+
+	thread_console = threading.Thread(target=queue_output, args=(channel2_console, queue_console))
+	#thread_console.daemon = True # thread dies with the program
+	thread_console.start()
+
+	print('Done.')
+	print('============================================')
+
+	while True:
+		#print(channel2_console.readline())
+		time.sleep(.4)
+		iii = '\r'
+		if not queue_console.empty():
+
+			line = queue_console.get()
+			print(line)
+finally:
+
+	print('         Close uarts ...')
+	channel2_console.close()
+
+
+
+
+
+	

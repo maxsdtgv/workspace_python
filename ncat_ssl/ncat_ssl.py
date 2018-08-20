@@ -22,6 +22,8 @@ import pathlib
 
 proto = 1 # tls=0, dtls =1
 
+logs = 1
+
 uart0_at = "/dev/ttyXRUSB0"
 uart0_at_speed = 921600
 
@@ -39,7 +41,7 @@ ssl_server = "172.17.57.221"
 r = '\r'
 n = '\n'
 comm_0 = 'AT' + r
-comm_1 = '' + r + n
+comm_1 = '' + r
 comm_2 = 'ATE' + r
 comm_3 = 'AT+CPSMS=1,,,"10100101","00000000"' + r
 comm_4 = 'cbe"setextwake b=0x800 m=0x3FFF"' + r
@@ -52,274 +54,293 @@ comm_10 = '' + r
 comm_11 = 'AT+SQNSI' + r
 comm_12 = 'cbe"netstat"' + r
 
+proc1 = ''
+proc2 = ''
+proc3 = ''
+proc4 = ''
+proc5 = ''
+proc6 = ''
+proc7 = ''
+line_to_send = ''
 
-try:
-	def timest():
-		ts = time.time()
-		#st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S.%f')
-		st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-		return st
+def timest():
+	ts = time.time()
+	#st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S.%f')
+	st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+	return st
 
-	def from_UE(ti, ts, tchannel, tprintout, check_response):
-		matchFound = 0
-		lineslist = ''
-		for tu in range(0, ti):
-			time.sleep(1)
-			if tchannel == 'channel0_at':
-				lineslist = channel0_at.readlines()
-			if tchannel == 'channel1_at':
-				lineslist = channel1_at.readlines()
-			if tchannel == 'channel2_console':
-				lineslist = channel2_console.readlines()
-			for line in lineslist:
-				line = line.decode().replace('\r', '').replace('\n', '')
-				if tprintout == 1:
-					print(line)
-				if line != '' and ts != '':
-					if line.find(ts) != -1:
-						matchFound = 1
-						break
-			if matchFound == 1:
-				break
-		if check_response == 1 and matchFound == 0:
-			print('Expected responce NOT FOUND!!!')
-			sys.exit()
-		return matchFound
+def from_UE(ti, ts, tchannel, tprintout, check_response):
+	global queue_console
+	matchFound = 0
+	lineslist = []
+	for tu in range(0, ti):
+		time.sleep(1)
+		if tchannel == 'channel0_at':
+			lineslist = channel0_at.readlines()
 
-	def to_UE(channel, sty):
-		if channel == 'channel0_at':
-			channel0_at.write(comm_1.encode())
-			time.sleep(.2)
-			channel0_at.readlines()
-			time.sleep(.2)
-			channel0_at.write(sty.encode())
+		if tchannel == 'channel1_at':
+			lineslist = channel1_at.readlines()
 
-		if channel == 'channel1_at':
-			channel1_at.write(comm_1.encode())
-			time.sleep(.2)
-			channel1_at.readlines()
-			time.sleep(.2)
-			channel1_at.write(sty.encode())
+		if tchannel == 'channel2_console':
+			while not queue_console.empty():
+				lineslist.append(queue_console.get())
 
-		if channel == 'channel2_console':
-			channel2_console.write(comm_1)
-			time.sleep(.2)
-			channel2_console.readlines()
-			time.sleep(.2)
-			channel2_console.write(sty)
-		return
+		#print('lineslist='+str(lineslist))
 
-	def gotoPSPM(waitPSPM):
+		for line in lineslist:
+			line = line.decode().replace('\r', '').replace('\n', '')
+			if tprintout == 1:
+				print(line)
+			if line != '' and ts != '':
+				if line.find(ts) != -1:
+					matchFound = 1
+					break
+		if matchFound == 1:
+			break
+	if check_response == 1 and matchFound == 0:
+		print('Expected responce NOT FOUND!!!')
+		sys.exit()
+	return matchFound
+
+def to_UE(channel, sty):
+	global line_to_send
+	if channel == 'channel0_at':
+		channel0_at.write(comm_1.encode())
+		time.sleep(.2)
+		channel0_at.readlines()
+		time.sleep(.2)
+		channel0_at.write(sty.encode())
+
+	if channel == 'channel1_at':
+		channel1_at.write(comm_1.encode())
+		time.sleep(.2)
+		channel1_at.readlines()
+		time.sleep(.2)
+		channel1_at.write(sty.encode())
+
+	if channel == 'channel2_console':
+		line_to_send = sty
+	return
+
+def gotoPSPM(waitPSPM):
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	print('========================== goto PSPM =================================')
+	print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set False')
+	print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set False')
+	print('     Console port rts = ' +str(channel2_console.rts))
+	channel0_at.rts = False
+	channel1_at.rts = False
+	print('     Waiting for PSPM ...')
+	if from_UE(waitPSPM, 'eem: Suspending...', 'channel2_console', 0, 1)	 == 1:
+		print('     UE in PSPM mode! (eem: Suspending...)')			
+	else:
+		print('!    Error. "eem: Suspending..." not found')
+		sys.exit()		
+
+def wakeupPSPM(waitPSPM):
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')		
+	print('========================== Resume from PSPM ===========================')
+	print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set True')
+	print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set True')
+	print('     Console port rts = ' +str(channel2_console.rts))
+	channel0_at.rts = True
+	channel1_at.rts = True
+	print('     Resuming from PSPM ...')
+	if from_UE(waitPSPM, 'eem: Resuming...', 'channel2_console', 0, 1)	 == 1:
+		print('     UE in PSO state! (eem: Resuming...)')
+	else:
+		print('!    Error. "eem: Resuming..." not found')
+		sys.exit()
+
+def channelDetection():
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	print('======================= Detecting channels ==============================')
+	time.sleep(8)
+	to_UE('channel0_at',comm_2)  # ============== send ATE
+	from_UE(5, '', 'channel0_at', 0, 0)
+
+	to_UE('channel0_at',comm_0)  # ============== send AT
+	if from_UE(5, 'OK', 'channel0_at', 0, 1) == 1:
+		print('     AT channel detected `OK` found')
+	else: 
+		print('!    Error. AT channel does not responce')
+		sys.exit()
+
+	time.sleep(5)
+	to_UE('channel2_console',comm_1)  # ============== send enter
+	if from_UE(5, '->', 'channel2_console', 0, 1) == 1:
+		print('     Console channel detected `->` found')	
+	else: 
+		print('!    Error. Console channel does not responce')
+		sys.exit()
+
+def queue_channel(out, nqueue):
+	global line_to_send
+	while True:	#	nqueue.put(line)
+		if out == channel2_console:
+			for line in iter(out.readline, b''):
+				nqueue.put(line.replace('\r','').replace('\n',''))
+
+			if line_to_send != '':
+				time.sleep(.1)
+				out.write(line_to_send)
+				line_to_send = ''	
+
+def queue_output(out, nqueue):
+	for line in iter(out.readline, b''):
+		nqueue.put(line)
+	out.close()
+
+def ncat_open_sockets(proto):
+	#====================================================================================================================
+	#	Open NCAT SSL connections
+	#====================================================================================================================
 		print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
-		print('========================== goto PSPM =================================')
-		print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set False')
-		print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set False')
-		print('     Console port rts = ' +str(channel2_console.rts))
-		channel0_at.rts = False
-		channel1_at.rts = False
-		print('     Waiting for PSPM ...')
-		if from_UE(waitPSPM, 'eem: Suspending...', 'channel2_console', 0, 1)	 == 1:
-			print('     UE in PSPM mode! (eem: Suspending...)')			
-		else:
-			print('!    Error. "eem: Suspending..." not found')
-			sys.exit()		
-
-	def wakeupPSPM(waitPSPM):
-		print('\r\n')		
-		sys.stdout.write('[' + timest() + '] ')		
-		print('========================== Resume from PSPM ===========================')
-		print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set True')
-		print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set True')
-		print('     Console port rts = ' +str(channel2_console.rts))
-		channel0_at.rts = True
-		channel1_at.rts = True
-		print('     Resuming from PSPM ...')
-		if from_UE(waitPSPM, 'eem: Resuming...', 'channel2_console', 0, 1)	 == 1:
-			print('     UE in PSO state! (eem: Resuming...)')
-		else:
-			print('!    Error. "eem: Resuming..." not found')
-			sys.exit()
-
-	def channelDetection():
-		print('\r\n')		
-		sys.stdout.write('[' + timest() + '] ')
-		print('======================= Detecting channels ==============================')
-		time.sleep(8)
-		to_UE('channel0_at',comm_2)  # ============== send ATE
-		from_UE(5, '', 'channel0_at', 0, 0)
-
-		to_UE('channel0_at',comm_0)  # ============== send AT
-		if from_UE(5, 'OK', 'channel0_at', 0, 1) == 1:
-			print('     AT channel detected `OK` found')
-		else: 
-			print('!    Error. AT channel does not responce')
-			sys.exit()
-
-		to_UE('channel2_console',comm_1)  # ============== send enter
-		if from_UE(5, '->', 'channel2_console', 0, 1) == 1:
-			print('     Console channel detected `->` found')	
-		else: 
-			print('!    Error. Console channel does not responce')
-			sys.exit()
-
-	def queue_output(out, nqueue):
-		for line in iter(out.readline, b''):
-			nqueue.put(line)
-		out.close()
-
-	def ncat_open_sockets(proto):
-		#====================================================================================================================
-		#	Open NCAT SSL connections
-		#====================================================================================================================
-			print('\r\n')		
-			sys.stdout.write('[' + timest() + '] ')
-			print('======================= Open NCAT SSL connections ====================')
-			if proto == 0:         # for tls
-				for i in range(1,7):         # ============== Open sockets for tls
-					spec_comm = 'AT+SQNSD=' + str(i) + ',0,' + str(5560+i) + ',"' + ssl_server + '",0,0,1' + r
-					to_UE('channel0_at',spec_comm)  
-					from_UE(5, 'OK', 'channel0_at', 1, 1)		
-
-			if proto == 1:         # for dtls
-				for i in range(1,7):         # ============== Opensockets for dtls
-					spec_comm = 'AT+SQNSD=' + str(i) + ',1,' + str(5570+i) + ',"' + ssl_server + '",0,0,1' + r
-					to_UE('channel0_at',spec_comm)  
-					from_UE(5, 'OK', 'channel0_at', 1, 1)
-
-		#====================================================================================================================
-	
-	def ncat_close_sockets():
-		#====================================================================================================================
-		#	Close NCAT SSL connections
-		#====================================================================================================================
-			print('\r\n')		
-			sys.stdout.write('[' + timest() + '] ')
-			print('======================= Close NCAT SSL connections')
-		       # for tls
-			to_UE('channel0_at',comm_9)  # send at+sqnss
-			from_UE(5, 'OK', 'channel0_at', 1, 1)
-
+		print('======================= Open NCAT SSL connections ====================')
+		if proto == 0:         # for tls
 			for i in range(1,7):         # ============== Open sockets for tls
-				spec_comm = 'AT+SQNSH=' + str(i) + r
+				spec_comm = 'AT+SQNSD=' + str(i) + ',0,' + str(5560+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
 				from_UE(5, 'OK', 'channel0_at', 1, 1)		
 
-		#====================================================================================================================
+		if proto == 1:         # for dtls
+			for i in range(1,7):         # ============== Opensockets for dtls
+				spec_comm = 'AT+SQNSD=' + str(i) + ',1,' + str(5570+i) + ',"' + ssl_server + '",0,0,1' + r
+				to_UE('channel0_at',spec_comm)  
+				from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-	def ncat_info():
-		print('======================= NCAT info =========================')
-		to_UE('channel0_at',comm_9)  # send at+sqnss
-		from_UE(5, 'OK', 'channel0_at', 1, 1)	
+	#====================================================================================================================
 
-		to_UE('channel0_at',comm_11)  # send at+sqnss
-		from_UE(5, 'OK', 'channel0_at', 1, 1)
-
-		to_UE('channel2_console',comm_12)  # send at+sqnss
-		from_UE(5, '->', 'channel2_console', 1, 1)
-
-		exec_command('netstat -nlp --inet')
-
-	def ssl_open_server(proto):
-
-		#====================================================================================================================
-		#	Threads for openssl listeners
-		#====================================================================================================================
+def ncat_close_sockets():
+	#====================================================================================================================
+	#	Close NCAT SSL connections
+	#====================================================================================================================
 		print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
-		print('=================== Threads for openssl listeners')
-		ON_POSIX = 'posix' in sys.builtin_module_names
-		global proc1
-		global proc2
-		global proc3
-		global proc4
-		global proc5
-		global proc6
-		global proc7
-		if proto == 0:         # for tls
-			proc1 = subprocess.Popen(["openssl", "s_server", "-accept", "5561", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc2 = subprocess.Popen(["openssl", "s_server", "-accept", "5562", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc3 = subprocess.Popen(["openssl", "s_server", "-accept", "5563", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc4 = subprocess.Popen(["openssl", "s_server", "-accept", "5564", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc5 = subprocess.Popen(["openssl", "s_server", "-accept", "5565", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc6 = subprocess.Popen(["openssl", "s_server", "-accept", "5566", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		print('======================= Close NCAT SSL connections')
+	       # for tls
+		to_UE('channel0_at',comm_9)  # send at+sqnss
+		from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-		if proto == 1:         # for dtls
-			proc1 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5571"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc2 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5572"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc3 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5573"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc4 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5574"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc5 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5575"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-			proc6 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5576"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		for i in range(1,7):         # ============== Open sockets for tls
+			spec_comm = 'AT+SQNSH=' + str(i) + r
+			to_UE('channel0_at',spec_comm)  
+			from_UE(5, 'OK', 'channel0_at', 1, 1)		
 
-		queue1 = Queue.Queue()
-		queue2 = Queue.Queue()
-		queue3 = Queue.Queue()
-		queue4 = Queue.Queue()
-		queue5 = Queue.Queue()
-		queue6 = Queue.Queue()
+	#====================================================================================================================
 
-		thread1 = threading.Thread(target=queue_output, args=(proc1.stdout, queue1))
-		thread2 = threading.Thread(target=queue_output, args=(proc2.stdout, queue2))	
-		thread3 = threading.Thread(target=queue_output, args=(proc3.stdout, queue3))
-		thread4 = threading.Thread(target=queue_output, args=(proc4.stdout, queue4))
-		thread5 = threading.Thread(target=queue_output, args=(proc5.stdout, queue5))
-		thread6 = threading.Thread(target=queue_output, args=(proc6.stdout, queue6))
+def ncat_info():
+	print('======================= NCAT info =========================')
+	to_UE('channel0_at',comm_9)  # send at+sqnss
+	from_UE(5, 'OK', 'channel0_at', 1, 1)	
+
+	to_UE('channel0_at',comm_11)  # send at+sqnss
+	from_UE(5, 'OK', 'channel0_at', 1, 1)
+
+	to_UE('channel2_console',comm_12)  # send at+sqnss
+	from_UE(5, '->', 'channel2_console', 1, 1)
+
+	exec_command('netstat -nlp --inet')
+
+def ssl_open_server(proto):
+
+	#====================================================================================================================
+	#	Threads for openssl listeners
+	#====================================================================================================================
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	print('=================== Threads for openssl listeners')
+	ON_POSIX = 'posix' in sys.builtin_module_names
+	global proc1
+	global proc2
+	global proc3
+	global proc4
+	global proc5
+	global proc6
+	global proc7
+	if proto == 0:         # for tls
+		proc1 = subprocess.Popen(["openssl", "s_server", "-accept", "5561", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc2 = subprocess.Popen(["openssl", "s_server", "-accept", "5562", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc3 = subprocess.Popen(["openssl", "s_server", "-accept", "5563", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc4 = subprocess.Popen(["openssl", "s_server", "-accept", "5564", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc5 = subprocess.Popen(["openssl", "s_server", "-accept", "5565", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc6 = subprocess.Popen(["openssl", "s_server", "-accept", "5566", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+
+	if proto == 1:         # for dtls
+		proc1 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5571"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc2 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5572"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc3 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5573"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc4 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5574"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc5 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5575"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		proc6 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5576"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+
+	queue1 = Queue.Queue()
+	queue2 = Queue.Queue()
+	queue3 = Queue.Queue()
+	queue4 = Queue.Queue()
+	queue5 = Queue.Queue()
+	queue6 = Queue.Queue()
+
+	thread1 = threading.Thread(target=queue_output, args=(proc1.stdout, queue1))
+	thread2 = threading.Thread(target=queue_output, args=(proc2.stdout, queue2))	
+	thread3 = threading.Thread(target=queue_output, args=(proc3.stdout, queue3))
+	thread4 = threading.Thread(target=queue_output, args=(proc4.stdout, queue4))
+	thread5 = threading.Thread(target=queue_output, args=(proc5.stdout, queue5))
+	thread6 = threading.Thread(target=queue_output, args=(proc6.stdout, queue6))
 
 
-		thread1.daemon = True # thread dies with the program
-		thread2.daemon = True # thread dies with the program	
-		thread3.daemon = True # thread dies with the program
-		thread4.daemon = True # thread dies with the program
-		thread5.daemon = True # thread dies with the program
-		thread6.daemon = True # thread dies with the program
+	thread1.daemon = True # thread dies with the program
+	thread2.daemon = True # thread dies with the program	
+	thread3.daemon = True # thread dies with the program
+	thread4.daemon = True # thread dies with the program
+	thread5.daemon = True # thread dies with the program
+	thread6.daemon = True # thread dies with the program
 
-		thread1.start()
-		thread2.start()
-		thread3.start()
-		thread4.start()
-		thread5.start()
-		thread6.start()
-		print('============================================')
-		#====================================================================================================================
+	thread1.start()
+	thread2.start()
+	thread3.start()
+	thread4.start()
+	thread5.start()
+	thread6.start()
+	print('============================================')
+	#====================================================================================================================
 
-	def ssl_close_server():
-		global proc1
-		global proc2
-		global proc3
-		global proc4
-		global proc5
-		global proc6
-		global proc7
+def ssl_close_server():
+	if proc1 != '' and proc1.poll() == None:
+		proc1.terminate()
 
-		if proc1 != '' and proc1.poll() == None:
-			proc1.terminate()
+	if proc2 != '' and proc2.poll() == None:
+		proc2.terminate()
 
-		if proc2 != '' and proc2.poll() == None:
-			proc2.terminate()
+	if proc3 != '' and proc3.poll() == None:
+		proc3.terminate()
 
-		if proc3 != '' and proc3.poll() == None:
-			proc3.terminate()
+	if proc4 != '' and proc4.poll() == None:
+		proc4.terminate()
 
-		if proc4 != '' and proc4.poll() == None:
-			proc4.terminate()
+	if proc5 != '' and proc5.poll() == None:
+		proc5.terminate()
 
-		if proc5 != '' and proc5.poll() == None:
-			proc5.terminate()
+	if proc6 != '' and proc6.poll() == None:
+		proc6.terminate()
 
-		if proc6 != '' and proc6.poll() == None:
-			proc6.terminate()
+def exec_command(command):
+	ON_POSIX = 'posix' in sys.builtin_module_names
+	tmp_command = "'" + command.replace(" ", "' '") + "'"
 
-	def exec_command(command):
-		ON_POSIX = 'posix' in sys.builtin_module_names
-		tmp_command = "'" + command.replace(" ", "' '") + "'"
+	temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
+	temp_out = temp_proc.communicate()[0]
 
-		temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
-		temp_out = temp_proc.communicate()[0]
+	if temp_proc.poll() == None:
+		temp_proc.terminate()		
+	return temp_out
 
-		if temp_proc.poll() == None:
-			temp_proc.terminate()		
-		return temp_out
+
+try:
 #====================================================================================================================
 #	Uarts connection
 #====================================================================================================================
@@ -333,6 +354,21 @@ try:
 	print('     AT0 port = ' + channel0_at.name + ' speed = ' + str(uart0_at_speed) + ' rts = ' + str(channel0_at.rts))
 	print('     AT1 port = ' + channel1_at.name + ' speed = ' + str(uart1_at_speed) + ' rts = ' + str(channel1_at.rts))
 	print('     Console port = ' + channel2_console.name + ' speed = ' + str(uart2_console_speed) + ' rts = ' +str(channel2_console.rts))
+	
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	print('=================== Threads for uart readings')
+
+	queue_console = Queue.Queue()
+	thread_console = threading.Thread(target=queue_output, args=(channel2_console, queue_console))
+	thread_console.daemon = True # thread dies with the program
+	thread_console.start()
+	print('Done.')
+	print('============================================')
+
+	
+
+
 #====================================================================================================================
 
 #====================================================================================================================
@@ -354,7 +390,7 @@ try:
 			sys.exit()	
 #====================================================================================================================
 
-	time.sleep(8)
+
 	channelDetection()
 
 #====================================================================================================================
