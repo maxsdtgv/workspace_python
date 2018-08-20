@@ -360,7 +360,7 @@ try:
 	print('=================== Threads for uart readings')
 
 	queue_console = Queue.Queue()
-	thread_console = threading.Thread(target=queue_output, args=(channel2_console, queue_console))
+	thread_console = threading.Thread(target=queue_channel, args=(channel2_console, queue_console))
 	thread_console.daemon = True # thread dies with the program
 	thread_console.start()
 	print('Done.')
