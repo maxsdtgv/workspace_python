@@ -1,0 +1,1176 @@
+AT+SQNSFACTORYRESET
+ERROR
+
++CEREG: 0
+AT^RESET
+OK
+
++SHUTDOWN
+
++SYSSTART
+
+OK
+ATE1
+OK
+AT+CFUN=1
+OK
+
++CEREG: 2
+
++CEREG: 1,"0002","01A2D002",7
+AT!="setlog NCAT FINEST"
+
+OK
+AT!="filterlog +ATD"
+
+OK
+AT+CMEE=0
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+AT+SQNSCFG=2,1,300,90,600,50
+OK
+AT+SQNSCFG=3,1,300,90,600,50
+OK
+AT+SQNSCFG=4,1,300,90,600,50
+OK
+AT+SQNSCFG=5,1,300,90,600,50
+OK
+AT+SQNSCFG=6,1,300,90,600,50
+OK
+group_1_Sequans_Test_2
+AT
+OK
+group_1_Sequans_Test_3
+ATE1
+OK
+AT
+OK
+group_2_Sequans_Test_1
+AT+SQNSCFG=?
++SQNSCFG: (1-6),(0-6),(0-1500),(0-65535),(0,10-1200),(0-255)
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,3,300,90,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,1,0,0,600,50
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,1,300,0,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+group_2_Sequans_Test_2
+AT+SQNSCFGEXT=?
++SQNSCFGEXT: (1-6),(0-2),(0-1),(0-240)[,(0-1)[,(0-1)[,(0)[,(0)]]]]
+OK
+AT+SQNSCFGEXT?
++SQNSCFGEXT: 1,0,0,0,0,0,0,0
++SQNSCFGEXT: 2,0,0,0,0,0,0,0
++SQNSCFGEXT: 3,0,0,0,0,0,0,0
++SQNSCFGEXT: 4,0,0,0,0,0,0,0
++SQNSCFGEXT: 5,0,0,0,0,0,0,0
++SQNSCFGEXT: 6,0,0,0,0,0,0,0
+
+OK
+AT+SQNSCFGEXT=1,0,0,0
+OK
+AT+SQNSCFGEXT?
++SQNSCFGEXT: 1,0,0,0,0,0,0,0
++SQNSCFGEXT: 2,0,0,0,0,0,0,0
++SQNSCFGEXT: 3,0,0,0,0,0,0,0
++SQNSCFGEXT: 4,0,0,0,0,0,0,0
++SQNSCFGEXT: 5,0,0,0,0,0,0,0
++SQNSCFGEXT: 6,0,0,0,0,0,0,0
+
+OK
+group_2_Sequans_Test_3
+AT+SQNSD=?
++SQNSD: (1-6),(0-1),(0-65535),<IPaddr>[,(0,255)[,(0-65535)[,(0-1)[,(0-1)]]]]
+
+OK
+AT+SQNSD?
+ERROR
+AT+SQNSD=1,0,43211,"192.168.3.1",0,0,0
+NO CARRIER
+AT+SQNSH=1
+ERROR
+group_2_Sequans_Test_4
+AT+SQNSO=?
++SQNSO: (1-6)
+OK
+AT+SQNSO?
+ERROR
+AT+SQNSO=1
+ERROR
+AT+SQNSD=1,0,23368,"192.168.3.1",0,0,0
+NO CARRIER
+AT+SQNSO=1
+ERROR
+AT+SQNSH=1
+ERROR
+group_2_Sequans_Test_5
+AT+SQNSSEND=?
++SQNSSEND: (1-6)
+
+OK
+AT+SQNSSEND?
+ERROR
+group_2_Sequans_Test_6
+AT+SQNSRECV=?
++SQNSRECV: (1-6),(1-1500)
+
+OK
+AT+SQNSRECV?
+ERROR
+group_2_Sequans_Test_7
+AT+SQNSS=?
+OK
+AT+SQNSS?
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSS=1
+ERROR
+AT+SQNSD=1,0,44169,"192.168.3.1",0,0,0
+NO CARRIER
+AT+SQNSS?
+ERROR
+AT+SQNSH=1
+OK
+group_2_Sequans_Test_8
+AT+SQNSI=?
++SQNSI: (1-6)
+OK
+AT+SQNSI?
+ERROR
+AT+SQNSI
++SQNSI: 1,0,0,0,0
++SQNSI: 2,0,0,0,0
++SQNSI: 3,0,0,0,0
++SQNSI: 4,0,0,0,0
++SQNSI: 5,0,0,0,0
++SQNSI: 6,0,0,0,0
+
+OK
+AT+SQNSD=1,0,5148,"192.168.3.1",0,0,0
+NO CARRIER
+AT+SQNSI
+ERROR
+AT+SQNSH=1
+OK
+group_2_Sequans_Test_9
+AT+SQNSH=?
++SQNSH: (1-6)
+OK
+AT+SQNSH?
+ERROR
+AT+SQNSH=1
+OK
+AT+SQNSD=1,0,80,"httpbin.org",0,8000,1
+NO CARRIER
+AT+SQNSH=1
+OK
+group_2_Sequans_Test_10
+AT+SQNSL=?
++SQNSL: (1-6),(0-1),(0-65535)[,(0,255)]
+
+OK
+AT+SQNSL?
+
+OK
+group_2_Sequans_Test_11
+AT+SQNSLUDP=?
++SQNSLUDP: (1-6),(0-1),(0-65535)
+
+OK
+AT+SQNSLUDP?
+
+OK
+group_2_Sequans_Test_12
+AT+SQNSA=?
++SQNSA: (1-6)[,(0-1)]
+
+OK
+AT+SQNSA?
+ERROR
+group_3_Sequans_Test_1
+AT+SQNSCFG?
++SQNSCFG: 1,3,300,90,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,1,0,0,600,50
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,1,300,0,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+AT+SQNSCFGEXT?
++SQNSCFGEXT: 1,0,0,0,0,0,0,0
++SQNSCFGEXT: 2,0,0,0,0,0,0,0
++SQNSCFGEXT: 3,0,0,0,0,0,0,0
++SQNSCFGEXT: 4,0,0,0,0,0,0,0
++SQNSCFGEXT: 5,0,0,0,0,0,0,0
++SQNSCFGEXT: 6,0,0,0,0,0,0,0
+
+OK
+AT+SQNSCFGEXT=1,0,0,0
+OK
+group_3_Sequans_Test_2
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+NO CARRIER
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_3
+AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+NO CARRIER
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_4
+AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+NO CARRIER
+AT+SQNSS
+ERROR
+group_3_Sequans_Test_5
+AT+SQNSO=1
+ERROR
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_6
+AT+SQNSD=1,0,41281,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSO=1
+ERROR
+AT+SQNSRECV=1,1500
+ERROR
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_7
+AT+SQNSD=1,0,41749,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSI
+ERROR
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_8
+AT+SQNSD=1,0,45737,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_9
+AT+SQNSD=1,0,12860,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSRECV=1,1500
+ERROR
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_10
+AT+SQNSD=1,0,25658,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSRECV=1,1500
+ERROR
+AT+SQNSI
++SQNSI: 1,0,0,0,0
++SQNSI: 2,0,0,0,0
++SQNSI: 3,0,0,0,0
++SQNSI: 4,0,0,0,0
++SQNSI: 5,0,0,0,0
++SQNSI: 6,0,0,0,0
+
+OK
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_11
+AT+SQNSD=1,0,48636,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSRECV=1,1500
+ERROR
+AT+SQNSI
++SQNSI: 1,0,0,0,0
++SQNSI: 2,0,0,0,0
++SQNSI: 3,0,0,0,0
++SQNSI: 4,0,0,0,0
++SQNSI: 5,0,0,0,0
++SQNSI: 6,0,0,0,0
+
+OK
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_12
+AT+SQNSD=1,0,47998,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSRECV=1,1500
+ERROR
+AT+SQNSI
++SQNSI: 1,0,0,0,0
++SQNSI: 2,0,0,0,0
++SQNSI: 3,0,0,0,0
++SQNSI: 4,0,0,0,0
++SQNSI: 5,0,0,0,0
++SQNSI: 6,0,0,0,0
+
+OK
+AT+SQNSH=1
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSI
++SQNSI: 1,0,0,0,0
++SQNSI: 2,0,0,0,0
++SQNSI: 3,0,0,0,0
++SQNSI: 4,0,0,0,0
++SQNSI: 5,0,0,0,0
++SQNSI: 6,0,0,0,0
+
+OK
+group_3_Sequans_Test_13
+AT+SQNSD=1,1,24433,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSI
+ERROR
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_14
+AT+SQNSD=1,0,45850,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_15
+AT+SQNSD=1,0,37197,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_16
+AT+SQNSL=1,1,1234
+ERROR
+AT+SQNSL?
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSH=1
+OK
+group_3_Sequans_Test_18
+AT+SQNSL=1,1,1234
+ERROR
+AT+SQNSL?
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT!="showpdn"
+- PDN config ----------------------------------------------------------------------------
+| Dft BrId      : 5                                                                     |
+| Apn           : VZWINTERNET.mnc001.mcc001.gprs                                        |
+| Dft DL CPU    : APP                                                                   |
+| ipV4 adr      : 192.168.3.13                                                          |
+| 1st ipV6 prfx : (L=64)2A02:578:5417:3004:                                             |
+| ipV6 itf id   : 2A02:0578:5417:3004                                                   |
+| DnsV4#1       : 192.168.3.1                                                           |
+| DnsV6#1       : 2A02:578:5417:3001::1                                                 |
+-----------------------------------------------------------------------------------------
+- PDN interfaces ------------------------------------------------------------------------
+| 1st host vid  : 0x460                                                                 |
+| dft channel   : 0                                                                     |
+| itf qty       : 8                                                                     |
+| CPU routing   : enabled                                                               |
+-----------------------------------------------------------------------------------------
+| cid | start | brId | type | vid  |      client@      |      server@      | EM | LP |  |
+| *1  | yes   | 5    | V4V6 | 461  | 00:16:08:00:04:61 | 00:16:08:FF:02:01 |    | X  |  |
+|     |       |      |      | 469  | 00:00:01:63:42:42 | 00:16:08:FF:02:01 |    | X  |  |
+-----------------------------------------------------------------------------------------
+| cid | traffic filters                                                                 |
+| 1   | ulIpV4Addr ulIpV6Prf                                                            |
+-----------------------------------------------------------------------------------------
+| cid | CPU | DL routing rules                                                          |
+-----------------------------------------------------------------------------------------
+| cid | CPU  | Host IPv6 interface id                                                   |
+-----------------------------------------------------------------------------------------
+
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSA=1
+ERROR
+AT+SQNSH=1
+ERROR
+group_3_Sequans_Test_19
+AT+SQNSLUDP=1,1,1234
+ERROR
+AT+SQNSLUDP?
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSH=1
+OK
+group_4_Sequans_Test_2
+AT+SQNSD=1,0,10262,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+group_4_Sequans_Test_3
+AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,0
+NO CARRIER
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,1
+NO CARRIER
+AT+SQNSSEND=1
+ERROR
+AT+SQNSH=1
+ERROR
+group_4_Sequans_Test_4
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSH=1
+OK
+group_4_Sequans_Test_5
+AT+CFUN?
++CFUN: 1
+
+OK
+AT+SQNSCFG=1,1,0,0,600,50
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,1,300,0,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSS
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSD=1,0,80,"httpbin.org",0,8000,1
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+ERROR
+group_4_Sequans_Test_6
+AT+SQNSS
++SQNSS: 1,2,"192.168.3.13",49153,"52.207.5.158",80
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+AT+SQNSSEND=1
+group_4_Sequans_Test_7
+group_4_Sequans_Test_8
+group_4_Sequans_Test_9
+AT+SQNSSEND=1test9
++SQNSH: 1
+
+^EXIT: exception: 1 ITYPE: 0x20 PC: 0x1c1c098a EVA: 0x2052d344
+
++SYSSTART
+
++CEREG: 2
+
++CEREG: 1,"0002","01A2D002",7
+
+OK
+
+OK
+
++SQNSI: 1,0,0,0,0
+
+OK
+
+ERROR
+group_5_Sequans_Test_1
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+group_5_Sequans_Test_2
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+group_5_Sequans_Test_4
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 1,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 2,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 3,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 4,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 5,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 6,0,0,0,0
+
+OK
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+group_5_Sequans_Test_5
+- PDN config ----------------------------------------------------------------------------
+| Dft BrId      : 5                                                                     |
+| Apn           : VZWINTERNET.mnc001.mcc001.gprs                                        |
+| Dft DL CPU    : APP                                                                   |
+| ipV4 adr      : 192.168.3.13                                                          |
+| 1st ipV6 prfx : (L=64)2A02:578:5417:3004:                                             |
+| ipV6 itf id   : 2A02:0578:5417:3004                                                   |
+| DnsV4#1       : 192.168.3.1                                                           |
+| DnsV6#1       : 2A02:578:5417:3001::1                                                 |
+-----------------------------------------------------------------------------------------
+- PDN interfaces ------------------------------------------------------------------------
+| 1st host vid  : 0x460                                                                 |
+| dft channel   : 0                                                                     |
+| itf qty       : 8                                                                     |
+| CPU routing   : enabled                                                               |
+-----------------------------------------------------------------------------------------
+| cid | start | brId | type | vid  |      client@      |      server@      | EM | LP |  |
+| *1  | yes   | 5    | V4V6 | 461  | 00:16:08:00:04:61 | 00:16:08:FF:02:01 |    | X  |  |
+|     |       |      |      | 469  | 00:00:01:63:42:42 | 00:16:08:FF:02:01 |    | X  |  |
+-----------------------------------------------------------------------------------------
+| cid | traffic filters                                                                 |
+| 1   | ulIpV4Addr ulIpV6Prf                                                            |
+-----------------------------------------------------------------------------------------
+| cid | CPU | DL routing rules                                                          |
+-----------------------------------------------------------------------------------------
+| cid | CPU  | Host IPv6 interface id                                                   |
+-----------------------------------------------------------------------------------------
+
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 1,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 2,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 3,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 4,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 5,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
++SQNSI: 6,0,0,0,0
+
+OK
+
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+OK
+
+OK
+
+OK
+
+OK
+
+OK
+
+OK
+
+OK
+END of group_5_Sequans_Test_5group_5_Sequans_Test_6
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+
++SQNSI: 1,0,0,0,0
+
+OK
+
+OK
+group_5_Sequans_Test_7
+
+OK
+
+OK
+
+NO CARRIER
+group_5_Sequans_Test_8
+
+OK
+
+OK
+
+NO CARRIER
+
+ERROR
+group_5_Sequans_Test_9
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+
+NO CARRIER
+
+ERROR
+
+ERROR
+
+OK
+group_5_Sequans_Test_10
+
+ERROR
+
++CEREG: 0
+
+OK
+
++SHUTDOWN
+
++SYSSTART
+
+OK
+ATE1
+OK
+AT+CFUN=1
+OK
+
++CEREG: 2
+
++CEREG: 1,"0001","01A2D001",7
+AT!="setlog NCAT FINEST"
+
+OK
+AT!="filterlog +ATD"
+
+OK
+AT+CMEE=0
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+AT+SQNSCFG=2,1,300,90,600,50
+OK
+AT+SQNSCFG=3,1,300,90,600,50
+OK
+AT+SQNSCFG=4,1,300,90,600,50
+OK
+AT+SQNSCFG=5,1,300,90,600,50
+OK
+AT+SQNSCFG=6,1,300,90,600,50
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,3,300,90,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,3,0,0,600,50
+OK
+AT+SQNSCFG?
++SQNSCFG: 1,3,300,0,600,50
++SQNSCFG: 2,1,300,90,600,50
++SQNSCFG: 3,1,300,90,600,50
++SQNSCFG: 4,1,300,90,600,50
++SQNSCFG: 5,1,300,90,600,50
++SQNSCFG: 6,1,300,90,600,50
+
+OK
+AT+SQNSCFG=1,3,300,90,600,50
+OK
+AT+SQNSCFGEXT?
++SQNSCFGEXT: 1,0,0,0,0,0,0,0
++SQNSCFGEXT: 2,0,0,0,0,0,0,0
++SQNSCFGEXT: 3,0,0,0,0,0,0,0
++SQNSCFGEXT: 4,0,0,0,0,0,0,0
++SQNSCFGEXT: 5,0,0,0,0,0,0,0
++SQNSCFGEXT: 6,0,0,0,0,0,0,0
+
+OK
+AT+SQNSCFGEXT=1,0,0,0
+OK
+AT+SQNSS;+SQNSD=1,0,80,"54.175.219.8"
++SQNSS: 1,0
++SQNSS: 2,0
++SQNSS: 3,0
++SQNSS: 4,0
++SQNSS: 5,0
++SQNSS: 6,0
+
+NO CARRIER
+AT+SQNSS;+SQNSO=1
+ERROR
+AT+CFUN?;+SQNSSEND=1
+ERROR
+AT+SQNSH=1
+ERROR

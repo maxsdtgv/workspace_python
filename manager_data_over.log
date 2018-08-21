@@ -1,0 +1,1534 @@
+INFO:root:Got line: AT+SQNSFACTORYRESET
+INFO:root:Wating for line +CEREG: 0, current line: AT+SQNSFACTORYRESET
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line +CEREG: 0, current line: ERROR
+
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 0, current line: 
+
+INFO:root:Got line: +CEREG: 0
+INFO:root:Wating for line +CEREG: 0, current line: +CEREG: 0
+
+INFO:root:Got line: AT^RESET
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line +SYSSTART, current line: 
+
+INFO:root:Got line: +SHUTDOWN
+INFO:root:Wating for line +SYSSTART, current line: +SHUTDOWN
+
+INFO:root:Got line: 
+INFO:root:Wating for line +SYSSTART, current line: 
+
+INFO:root:Got line: +SYSSTART
+INFO:root:Wating for line +SYSSTART, current line: +SYSSTART
+
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: ATE1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+CFUN=1
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 1, current line: 
+
+INFO:root:Got line: +CEREG: 2
+INFO:root:Wating for line +CEREG: 1, current line: +CEREG: 2
+
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 1, current line: 
+
+INFO:root:Got line: +CEREG: 1,"0002","01A2D002",7
+INFO:root:Wating for line +CEREG: 1, current line: +CEREG: 1,"0002","01A2D002",7
+
+INFO:root:Got line: AT!="setlog NCAT FINEST"
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT!="filterlog +ATD"
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+CMEE=0
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=2,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=3,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=4,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=5,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=6,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT
+INFO:root:Got line: OK
+INFO:root:Got line: ATE1
+INFO:root:Got line: OK
+INFO:root:Got line: AT
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=?
+INFO:root:Got line: +SQNSCFG: (1-6),(0-6),(0-1500),(0-65535),(0,10-1200),(0-255)
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,3,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,1,0,0,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,1,300,0,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT=?
+INFO:root:Got line: +SQNSCFGEXT: (1-6),(0-2),(0-1),(0-240)[,(0-1)[,(0-1)[,(0)[,(0)]]]]
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT?
+INFO:root:Got line: +SQNSCFGEXT: 1,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 2,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 3,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 4,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 5,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 6,0,0,0,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT=1,0,0,0
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT?
+INFO:root:Got line: +SQNSCFGEXT: 1,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 2,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 3,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 4,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 5,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 6,0,0,0,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=?
+INFO:root:Got line: +SQNSD: (1-6),(0-1),(0-65535),<IPaddr>[,(0,255)[,(0-65535)[,(0-1)[,(0-1)]]]]
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSD?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,43211,"192.168.3.1",0,0,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,43211,"192.168.3.1",0,0,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSO=?
+INFO:root:Got line: +SQNSO: (1-6)
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSO?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSO?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSO=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSO=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,23368,"192.168.3.1",0,0,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,23368,"192.168.3.1",0,0,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSO=1
+INFO:root:Wating for line CONNECT, current line: AT+SQNSO=1
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line CONNECT, current line: ERROR
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSSEND=?
+INFO:root:Got line: +SQNSSEND: (1-6)
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSSEND?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSSEND?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSRECV=?
+INFO:root:Got line: +SQNSRECV: (1-6),(1-1500)
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSRECV?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSS=?
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS?
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSS=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,44169,"192.168.3.1",0,0,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,44169,"192.168.3.1",0,0,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSS?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSS?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSI=?
+INFO:root:Got line: +SQNSI: (1-6)
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSI?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSI?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,5148,"192.168.3.1",0,0,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,5148,"192.168.3.1",0,0,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSI\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=?
+INFO:root:Got line: +SQNSH: (1-6)
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,1
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSL=?
+INFO:root:Got line: +SQNSL: (1-6),(0-1),(0-65535)[,(0,255)]
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSL?
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSLUDP=?
+INFO:root:Got line: +SQNSLUDP: (1-6),(0-1),(0-65535)
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSLUDP?
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSA=?
+INFO:root:Got line: +SQNSA: (1-6)[,(0-1)]
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSA?
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSA?\r') ended with ERROR
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,3,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,1,0,0,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,1,300,0,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT?
+INFO:root:Got line: +SQNSCFGEXT: 1,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 2,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 3,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 4,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 5,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 6,0,0,0,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT=1,0,0,0
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSS\r') ended with ERROR
+INFO:root:Got line: AT+SQNSO=1
+INFO:root:Wating for line CONNECT, current line: AT+SQNSO=1
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line CONNECT, current line: ERROR
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,41281,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,41281,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSO=1
+INFO:root:Wating for line CONNECT, current line: AT+SQNSO=1
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line CONNECT, current line: ERROR
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSRECV=1,1500
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,41749,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,41749,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSI\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,45737,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,45737,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test_data_8\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,12860,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,12860,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('telit_test_9\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSRECV=1,1500
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,25658,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,25658,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('Sequans_Test_10\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSRECV=1,1500
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,48636,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,48636,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('group_3_Sequans_Test_11\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSRECV=1,1500
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,47998,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,47998,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('Sequans_Test_12\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSRECV=1,1500
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,1,24433,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,1,24433,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSI
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSI\r') ended with ERROR
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,45850,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,45850,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSD=1,0,37197,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,37197,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSL=1,1,1234
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSL=1,1,1234\r') ended with ERROR
+INFO:root:Got line: AT+SQNSL?
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSL=1,1,1234
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSL=1,1,1234\r') ended with ERROR
+INFO:root:Got line: AT+SQNSL?
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT!="showpdn"
+INFO:root:Got line: - PDN config ----------------------------------------------------------------------------
+INFO:root:Got line: | Dft BrId      : 5                                                                     |
+INFO:root:Got line: | Apn           : VZWINTERNET.mnc001.mcc001.gprs                                        |
+INFO:root:Got line: | Dft DL CPU    : APP                                                                   |
+INFO:root:Got line: | ipV4 adr      : 192.168.3.13                                                          |
+INFO:root:Got line: | 1st ipV6 prfx : (L=64)2A02:578:5417:3004:                                             |
+INFO:root:Got line: | ipV6 itf id   : 2A02:0578:5417:3004                                                   |
+INFO:root:Got line: | DnsV4#1       : 192.168.3.1                                                           |
+INFO:root:Got line: | DnsV6#1       : 2A02:578:5417:3001::1                                                 |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: - PDN interfaces ------------------------------------------------------------------------
+INFO:root:Got line: | 1st host vid  : 0x460                                                                 |
+INFO:root:Got line: | dft channel   : 0                                                                     |
+INFO:root:Got line: | itf qty       : 8                                                                     |
+INFO:root:Got line: | CPU routing   : enabled                                                               |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | start | brId | type | vid  |      client@      |      server@      | EM | LP |  |
+INFO:root:Got line: | *1  | yes   | 5    | V4V6 | 461  | 00:16:08:00:04:61 | 00:16:08:FF:02:01 |    | X  |  |
+INFO:root:Got line: |     |       |      |      | 469  | 00:00:01:63:42:42 | 00:16:08:FF:02:01 |    | X  |  |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | traffic filters                                                                 |
+INFO:root:Got line: | 1   | ulIpV4Addr ulIpV6Prf                                                            |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | CPU | DL routing rules                                                          |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | CPU  | Host IPv6 interface id                                                   |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: 
+INFO:root:Got line: 
+INFO:root:Got line: OK
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSA=1
+INFO:root:Wating for line CONNECT, current line: AT+SQNSA=1
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line CONNECT, current line: ERROR
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSLUDP=1,1,1234
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSLUDP=1,1,1234\r') ended with ERROR
+INFO:root:Got line: AT+SQNSLUDP?
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,10262,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,10262,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+ERROR:root:Warning! waiting for 'NO CARRIER' ended with timeout!
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,0
+INFO:root:Wating for line CONNECT, current line: AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,0
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+ERROR:root:Warning! waiting for 'NO CARRIER' ended with timeout!
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,1
+INFO:root:Wating for line OK, current line: AT+SQNSD=1,0,7684,"192.168.3.1",0,8000,1
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test_4_3\x1a') ended with ERROR
+INFO:root:Wating for line +SQNSRING: 1, current line: TIMEOUT
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+CFUN?
+INFO:root:Got line: +CFUN: 1
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,1,0,0,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,1,300,0,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,1
+INFO:root:Wating for line NO CARRIER, current line: AT+SQNSD=1,0,80,"httpbin.org",0,8000,1
+
+INFO:root:Got line: OK
+INFO:root:Wating for line NO CARRIER, current line: OK
+
+ERROR:root:Warning! waiting for 'NO CARRIER' ended with timeout!
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSCFG=1,3,300,90,600,50\r') ended with ERROR
+INFO:root:Got line: AT+SQNSS
+INFO:root:Got line: +SQNSS: 1,2,"192.168.3.13",49153,"52.207.5.158",80
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSSEND=1
+INFO:root:Wating for line CONNECT, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+ERROR:root:Warning! waiting for '+CEREG: 0' ended with timeout!
+INFO:root:Wating for line NO CARRIER, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'NO CARRIER' ended with timeout!
+ERROR:root:Warning! waiting for '+CEREG: 1' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSSEND=1test9
+INFO:root:Got line: +SQNSH: 1
+INFO:root:Got line: 
+INFO:root:Got line: ^EXIT: exception: 1 ITYPE: 0x20 PC: 0x1c1c098a EVA: 0x2052d344
+INFO:root:Got line: 
+INFO:root:Wating for line +SQNSRING: 1, current line: 
+
+INFO:root:Got line: +SYSSTART
+INFO:root:Wating for line +SQNSRING: 1, current line: +SYSSTART
+
+INFO:root:Got line: 
+INFO:root:Wating for line +SQNSRING: 1, current line: 
+
+INFO:root:Got line: +CEREG: 2
+INFO:root:Wating for line +SQNSRING: 1, current line: +CEREG: 2
+
+INFO:root:Got line: 
+INFO:root:Wating for line +SQNSRING: 1, current line: 
+
+INFO:root:Got line: +CEREG: 1,"0002","01A2D002",7
+INFO:root:Wating for line +SQNSRING: 1, current line: +CEREG: 1,"0002","01A2D002",7
+
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line OK, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('grp5_test1\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line OK, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('grp5_test1\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1,20' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line OK, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('grp5_test1\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1,20,grp5_test1grp5_test1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('grp5_test2\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1,20,grp5_test2grp5_test2' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('grp5_test2\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1,20,677270355F7465737432677270355F7465737432' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 2' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=2,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 3' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=3,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 4' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=4,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 5' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=5,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test4_rg5\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 6' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=6,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: - PDN config ----------------------------------------------------------------------------
+INFO:root:Got line: | Dft BrId      : 5                                                                     |
+INFO:root:Got line: | Apn           : VZWINTERNET.mnc001.mcc001.gprs                                        |
+INFO:root:Got line: | Dft DL CPU    : APP                                                                   |
+INFO:root:Got line: | ipV4 adr      : 192.168.3.13                                                          |
+INFO:root:Got line: | 1st ipV6 prfx : (L=64)2A02:578:5417:3004:                                             |
+INFO:root:Got line: | ipV6 itf id   : 2A02:0578:5417:3004                                                   |
+INFO:root:Got line: | DnsV4#1       : 192.168.3.1                                                           |
+INFO:root:Got line: | DnsV6#1       : 2A02:578:5417:3001::1                                                 |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: - PDN interfaces ------------------------------------------------------------------------
+INFO:root:Got line: | 1st host vid  : 0x460                                                                 |
+INFO:root:Got line: | dft channel   : 0                                                                     |
+INFO:root:Got line: | itf qty       : 8                                                                     |
+INFO:root:Got line: | CPU routing   : enabled                                                               |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | start | brId | type | vid  |      client@      |      server@      | EM | LP |  |
+INFO:root:Got line: | *1  | yes   | 5    | V4V6 | 461  | 00:16:08:00:04:61 | 00:16:08:FF:02:01 |    | X  |  |
+INFO:root:Got line: |     |       |      |      | 469  | 00:00:01:63:42:42 | 00:16:08:FF:02:01 |    | X  |  |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | traffic filters                                                                 |
+INFO:root:Got line: | 1   | ulIpV4Addr ulIpV6Prf                                                            |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | CPU | DL routing rules                                                          |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: | cid | CPU  | Host IPv6 interface id                                                   |
+INFO:root:Got line: -----------------------------------------------------------------------------------------
+INFO:root:Got line: 
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 2' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=2,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 2,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 3' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=3,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 3,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 4' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=4,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 4,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 5' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=5,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 5,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('test5_rg511\x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 6' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=6,1500\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 6,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line CONNECT, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSI=1\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: +SQNSI: 1,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line NO CARRIER, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line NO CARRIER, current line: NO CARRIER
+
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line CONNECT, current line: 
+
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line CONNECT, current line: NO CARRIER
+
+ERROR:root:Warning! waiting for 'CONNECT' ended with timeout!
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSS\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,10\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,210\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,410\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,610\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,810\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1010\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! itistest9| text was sent to server! \x1a') ended with ERROR
+ERROR:root:Warning! waiting for '+SQNSRING: 1' ended with timeout!
+INFO:root:Got line: 
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSRECV=1,1210\r') ended with ERROR
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 0, current line: 
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line +CEREG: 0, current line: ERROR
+
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 0, current line: 
+
+INFO:root:Got line: +CEREG: 0
+INFO:root:Wating for line +CEREG: 0, current line: +CEREG: 0
+
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line +SYSSTART, current line: 
+
+INFO:root:Got line: +SHUTDOWN
+INFO:root:Wating for line +SYSSTART, current line: +SHUTDOWN
+
+INFO:root:Got line: 
+INFO:root:Wating for line +SYSSTART, current line: 
+
+INFO:root:Got line: +SYSSTART
+INFO:root:Wating for line +SYSSTART, current line: +SYSSTART
+
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: ATE1
+INFO:root:Got line: OK
+INFO:root:Got line: AT+CFUN=1
+INFO:root:Got line: OK
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 1, current line: 
+
+INFO:root:Got line: +CEREG: 2
+INFO:root:Wating for line +CEREG: 1, current line: +CEREG: 2
+
+INFO:root:Got line: 
+INFO:root:Wating for line +CEREG: 1, current line: 
+
+INFO:root:Got line: +CEREG: 1,"0001","01A2D001",7
+INFO:root:Wating for line +CEREG: 1, current line: +CEREG: 1,"0001","01A2D001",7
+
+INFO:root:Got line: AT!="setlog NCAT FINEST"
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT!="filterlog +ATD"
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+CMEE=0
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=2,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=3,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=4,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=5,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=6,1,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,3,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,0,0,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG?
+INFO:root:Got line: +SQNSCFG: 1,3,300,0,600,50
+INFO:root:Got line: +SQNSCFG: 2,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 3,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 4,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 5,1,300,90,600,50
+INFO:root:Got line: +SQNSCFG: 6,1,300,90,600,50
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFG=1,3,300,90,600,50
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT?
+INFO:root:Got line: +SQNSCFGEXT: 1,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 2,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 3,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 4,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 5,0,0,0,0,0,0,0
+INFO:root:Got line: +SQNSCFGEXT: 6,0,0,0,0,0,0,0
+INFO:root:Got line: 
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSCFGEXT=1,0,0,0
+INFO:root:Got line: OK
+INFO:root:Got line: AT+SQNSS;+SQNSD=1,0,80,"54.175.219.8"
+INFO:root:Got line: +SQNSS: 1,0
+INFO:root:Got line: +SQNSS: 2,0
+INFO:root:Got line: +SQNSS: 3,0
+INFO:root:Got line: +SQNSS: 4,0
+INFO:root:Got line: +SQNSS: 5,0
+INFO:root:Got line: +SQNSS: 6,0
+INFO:root:Got line: 
+INFO:root:Got line: NO CARRIER
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSS;+SQNSO=1
+INFO:root:Got line: ERROR
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+CFUN?;+SQNSSEND=1
+INFO:root:Wating for line +CFUN: 1, current line: AT+CFUN?;+SQNSSEND=1
+
+INFO:root:Got line: ERROR
+INFO:root:Wating for line +CFUN: 1, current line: ERROR
+
+ERROR:root:Warning! waiting for '+CFUN: 1' ended with timeout!
+INFO:root:Wating for line OK, current line: TIMEOUT
+ERROR:root:Warning! waiting for 'OK' ended with timeout!
+INFO:root:Got line: AT+SQNSH=1
+INFO:root:Got line: ERROR
+ERROR:root:AT command ('AT+SQNSH=1\r') ended with ERROR

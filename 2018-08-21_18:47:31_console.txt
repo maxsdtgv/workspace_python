@@ -1,0 +1,78 @@
+Log from console
+[2018-08-21 18:47:32] [0000000000] Running on Windbond flash sector 0x1C020000
+[2018-08-21 18:47:32] [0000000000] RBGerbil 11.11@38651 '5.2.1.0 [38651]'
+[2018-08-21 18:47:32] [0000000004] Reset cause 'EXT'(real 'EXT' ) (bootWDG : '0') [rawRst '0x0000[2018-08-21 18:47:32] 0001']
+[2018-08-21 18:47:32] [0000000012] regConfig 0x7B6FDB07@1
+[2018-08-21 18:47:32] [0000000015] boot: Current flash, timeout 10000, proto thp
+[2018-08-21 18:47:32] [0000000020] boot: FFF mode
+[2018-08-21 18:47:32] [0000000170] elf: ELF format selected
+[2018-08-21 18:47:32] [0000000173] elf: Header finished
+[2018-08-21 18:47:32] [0000000176] elf: Waiting for 448 bytes
+[2018-08-21 18:47:32] [0000000180] [2018-08-21 18:47:32] elf: PH 0x00000000, 20 bytes
+[2018-08-21 18:47:32] [0000000184] elf: Note 0x4D415000
+[2018-08-21 18:47:32] [0000000187] elf: PH 0x00001000, 92 bytes
+[2018-08-21 18:47:32] [0000000190] elf: PH 0x00001060, 1120 bytes
+[2018-08-21 18:47:32] [0000000194] elf: PH 0x000014C0, 169480 bytes
+[2018-08-21 18:47:32] [0000000203] elf: PH 0x0002AAC8, 8 bytes
+[2018-08-21 18:47:32] [0000000207] elf: PH 0x0002AAD0, 56 bytes
+[2018-08-21 18:47:32] [0000000210] elf: PH 0x0002AB08, 100 bytes[2018-08-21 18:47:32] 
+[2018-08-21 18:47:32] [0000000214] elf: PH 0x0002AB6C, 472 bytes
+[2018-08-21 18:47:32] [0000000218] elf: PH 0x0002AD44, 2372 bytes
+[2018-08-21 18:47:32] [0000000222] elf: PH 0x003C1000, 32 by[2018-08-21 18:47:32] tes
+[2018-08-21 18:47:32] [0000000226] elf: PH 0x00710000, 192528 bytes
+[2018-08-21 18:47:32] [0000000235] elf: PH 0x00750000, 111592 bytes
+[2018-08-21 18:47:32] [0000000242] elf: PH 0x007A0000, 326624 bytes
+[2018-08-21 18:47:32] [0000000255] elf: PH 0x003BF000, 8192 bytes
+[2018-08-21 18:47:32] [0000000259] elf: Program Header finished
+[2018-08-21 18:47:32] [0000000263] sbp: Booting at 0x1C100350...
+[2018-08-21 18:47:32] [app] No embedded app
+[2018-08-21 18:47:32] fs: Mounting /flash0...[2018-08-21 18:47:32] done
+[2018-08-21 18:47:32] fs: Overlay filesystem mounted on /fs
+[2018-08-21 18:47:32] >INFO> DCP : Init over='serial'
+[2018-08-21 18:47:32] [PSP] initializing
+[2018-08-21 18:47:33] QKI pools init...done
+[2018-08-21 18:47:33] eem: mem initialized
+[2018-08-21 18:47:33] [FEEDS] :  Configure enter EAPPS
+[2018-08-21 18:47:33] 
+[2018-08-21 18:47:34] [FEEDS] :  Configure leave EAPPS
+[2018-08-21 18:47:34] 
+[2018-08-21 18:47:34] hp: Initialized
+[2018-08-21 18:47:34] [FEEDS] :  Init enter EAPPS
+[2018-08-21 18:47:34] 
+[2018-08-21 18:47:35] [FEEDS] :  Init leave EAPPS
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:35] [FEEDS] :  Init enter LWM2M
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:35] [FEEDS] :  Init leave LWM2M
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:35] [FEEDS] :  Init enter SQNSMS
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:35] [FEEDS] :  Init leave SQNSMS
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:35] [PSP] initialized
+[2018-08-21 18:47:35] [PSP] starting
+[2018-08-21 18:47:35] reserved room 5/100
+[2018-08-21 18:47:35] SLO started
+[2018-08-21 18:47:35] ::hell terminal::
+[2018-08-21 18:47:35] -> [2018-08-21 18:47:35] [ZSP0] started after 2 ms, version 259.7
+[2018-08-21 18:47:35] [ZSP1] started after 1 ms, version 257.6
+[2018-08-21 18:47:35] LPU boot confirmation
+[2018-08-21 18:47:35] [L1P] started
+[2018-08-21 18:47:35] hp: Started
+[2018-08-21 18:47:35] [FEEDS] :  Start enter EAPPS
+[2018-08-21 18:47:35] 
+[2018-08-21 18:47:36] [FEEDS] :  Start leave EAPPS
+[2018-08-21 18:47:36] 
+[2018-08-21 18:47:36] [FEEDS] :  Start enter LWM2M
+[2018-08-21 18:47:36] 
+[2018-08-21 18:47:36] [FEEDS] :  Start leave LWM2M
+[2018-08-21 18:47:36] 
+[2018-08-21 18:47:36] [FEEDS] :  Start enter SQNSMS
+[2018-08-21 18:47:36] 
+[2018-08-21 18:47:36] [FEEDS] :  Start leave SQNSMS
+[2018-08-21 18:47:36] 
+[2018-08-21 18:47:36] [PSP] started
+[2018-08-21 18:47:36] ammReadFs path=/fs/emmNv.dat len=1856 retVal=1856
+[2018-08-21 18:47:38] ammWriteFs path=/fs/emmNv.dat len=1856 maxL=1856
+[2018-08-21 18:47:46] ammWriteFs path=/fs/emmNv.dat len=132 maxL=1856
+[2018-08-21 18:47:46] esmWriteFs path=/f
