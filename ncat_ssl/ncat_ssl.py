@@ -286,6 +286,7 @@ def ssl_open_server(proto):
 	global proc6
 	global proc7
 	if proto == 0:         # for tls
+		print ('     Started for TLS')
 		proc1 = subprocess.Popen(["openssl", "s_server", "-accept", "5561", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 		proc2 = subprocess.Popen(["openssl", "s_server", "-accept", "5562", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 		proc3 = subprocess.Popen(["openssl", "s_server", "-accept", "5563", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
@@ -294,6 +295,7 @@ def ssl_open_server(proto):
 		proc6 = subprocess.Popen(["openssl", "s_server", "-accept", "5566", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 
 	if proto == 1:         # for dtls
+		print ('     Started for DTLS')
 		proc1 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5571"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 		proc2 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5572"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 		proc3 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5573"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
@@ -329,6 +331,7 @@ def ssl_open_server(proto):
 	thread4.start()
 	thread5.start()
 	thread6.start()
+	exec_command('netstat -nlp --inet')
 	print('============================================')
 	#====================================================================================================================
 
