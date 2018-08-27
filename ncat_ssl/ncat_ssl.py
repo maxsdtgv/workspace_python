@@ -20,7 +20,7 @@ import Queue
 import signal
 import pathlib
 
-proto = 1 # tls=0, dtls =1
+proto = 0 # tls=0, dtls =1
 
 logs = 1
 
@@ -402,6 +402,36 @@ def super_print(super_string):
 	print(super_string)
 	log_terminal.write('[' + timest() + ']' + ' ' + super_string+'\r\n')
 	
+def test_case_1(proto):
+
+	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
+		ssl_open_server(1)
+
+	ncat_info()
+	ncat_open_sockets(proto)
+	ncat_info()
+
+	gotoPSPM(60)
+	time.sleep(5)
+
+	wakeupPSPM(10)
+	time.sleep(5)
+
+	channelDetection()
+	'''
+	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
+	from_UE(2, '->', 'channel2_console', 0, 1)		
+	'''
+	ncat_info()
+	ncat_close_sockets()
+	ncat_info()
+
+	time.sleep(5)
+
+	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
+		ssl_close_server()
+	time.sleep(3)   # Just open/close NCAT SSL TLS/DTLS sessions in loop
+
 try:
 
 #====================================================================================================================
@@ -426,12 +456,12 @@ try:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= SSL/TLS =============================')	
-		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n\r\n')
+		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n')
 	else:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= SSL/DTLS =============================')				
-		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n\r\n')
+		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n')
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('======================= Log files creation finished')
@@ -439,7 +469,11 @@ try:
 	super_print ('     Log file for AT0 is created - ' + name_time+'_at0.txt')
 	super_print ('     Log file for AT1 is created - ' + name_time+'_at1.txt')
 	super_print ('     Log file for console is created - ' + name_time + '_console.txt')
+#====================================================================================================================
 
+#====================================================================================================================
+#	Open uarts
+#====================================================================================================================
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('======================= Open uarts ...')
@@ -568,6 +602,7 @@ try:
 		to_UE('channel0_at',comm_6)  # ============== Configure SSL/TLS security profile configuration AT+SQNSPCFG=1,2,"",1,0,,,""
 		from_UE(3, 'OK', 'channel0_at', 1, 1)
 		super_print('============================================')
+
 	if proto == 1:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
@@ -590,46 +625,22 @@ try:
 		from_UE(5, 'OK', 'channel0_at', 1, 1)
 	super_print('============================================')
 #====================================================================================================================
-	
+	'''
 	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
 	from_UE(2, '->', 'channel2_console', 0, 1)
 	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
 	from_UE(2, '->', 'channel2_console', 0, 1)
-	
+	'''
 	if proto == 0:
-		ssl_open_server(proto)
+		ssl_open_server(0)
 
 	for i in range(1, test_iter+1):
 		super_print('====================================================================')
 		super_print('                      Test loop = ' + str(i))
 		super_print('====================================================================')
-		if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
-			ssl_open_server(1)
 
-		ncat_info()
-		ncat_open_sockets(proto)
-		ncat_info()
+		test_case_1(proto)
 
-		gotoPSPM(60)
-		time.sleep(5)
-
-		wakeupPSPM(10)
-		time.sleep(5)
-
-		channelDetection()
-
-		to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
-		from_UE(2, '->', 'channel2_console', 0, 1)		
-
-		ncat_info()
-		ncat_close_sockets()
-		ncat_info()
-
-		time.sleep(5)
-
-		if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
-			ssl_close_server()
-		time.sleep(3)
 	if proto == 0:
 		ssl_close_server()
 
