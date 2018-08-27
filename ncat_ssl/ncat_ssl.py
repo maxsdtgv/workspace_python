@@ -24,7 +24,7 @@ proto = 0 # tls=0, dtls =1
 
 logs = 1
 
-test_iter = 20 # number of tests
+test_iter = 100 # number of tests
 
 uart0_at = "/dev/ttyXRUSB0"
 uart0_at_speed = 921600
@@ -59,6 +59,7 @@ comm_13 = 'AT^RESET' + r
 comm_14 = 'AT!="infoall"' + r
 comm_15 = 'cbe"printlog 1 1"' + r
 comm_16 = 'cbe"setlog ncat finest"' + r
+comm_17 = 'AT!="showver"' + r
 
 proc1 = ''
 proc2 = ''
@@ -554,6 +555,18 @@ try:
 		super_print('     Expected response +SYSSTART is found!')
 	
 	channelDetection()
+#====================================================================================================================
+
+#====================================================================================================================
+#	Check version of the firmware
+#====================================================================================================================
+	super_print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	super_print('=================== Check version of the firmware ...')
+	to_UE('channel0_at',comm_17)  # send at!="showver"
+	from_UE(5, 'OK', 'channel0_at', 1, 1)
+#====================================================================================================================
+
 
 #====================================================================================================================
 #	AT commands for LPM prepare
