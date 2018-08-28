@@ -42,7 +42,7 @@ key_file_name = "rootCA.key"
 pem_file_name = "rootCA.pem"
 
 ssl_server_ipv4 = "172.17.57.243"
-ssl_server_ipv6 = "2001:67c:2e5c:2033:24c5:315:1b98:d03a"
+ssl_server_ipv6 = "2001:67c:2e5c:2033:a8:b11:79ae:8b0d"
 #====================================================================================================================
 
 #====================================================================================================================
@@ -305,12 +305,13 @@ def ncat_info():
 	to_UE('channel0_at',comm_11)  # send at+sqnsi
 	from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-	to_UE('channel0_at',comm_12)  # send cbe"netstat"
-	from_UE(5, 'OK', 'channel0_at', 1, 1)
-
 	to_UE('channel0_at',comm_14)  # send cbe"infoall"
 	from_UE(5, 'OK', 'channel0_at', 1, 1)
 
+	to_UE('channel0_at',comm_12)  # send cbe"netstat"
+	from_UE(5, 'OK', 'channel0_at', 1, 1)
+
+	super_print('exec => netstat -nlp --inet --inet6')
 	super_print(exec_command('netstat -nlp --inet --inet6'))
 
 def ssl_open_server(proto):
@@ -356,7 +357,7 @@ def ssl_close_server():
 		try:
 			if arr_proc[i-1].poll() == None:
 				arr_proc[i-1].terminate()
-				arr_proc[i-1].clear()
+				del arr_proc[i-1]
 		except IndexError:
 			super_print ('     Cant close, proc ' + str(i) + ' for openssl does not exist.')
 	super_print('============================================')
