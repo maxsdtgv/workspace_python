@@ -36,7 +36,7 @@ uart2_console_speed = 115200
 key_file_name = "rootCA.key"
 pem_file_name = "rootCA.pem"
 ssl_server_ipv4 = "172.17.57.243"
-ssl_server_ipv6 = "2001:67c:2e5c:2033:29f6:3fc1:1d87:6a76"
+ssl_server_ipv6 = "2001:67c:2e5c:2033:24c5:315:1b98:d03a"
 #====================================================================================================================
 
 ssl_server = ''
@@ -301,7 +301,7 @@ def ncat_info():
 	to_UE('channel0_at',comm_14)  # send cbe"infoall"
 	from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-	super_print(exec_command('netstat -ant'))
+	super_print(exec_command('netstat -nlp'))
 
 def ssl_open_server(proto):
 
@@ -353,8 +353,8 @@ def ssl_close_server():
 
 def exec_command(command):
 	ON_POSIX = 'posix' in sys.builtin_module_names
-
-	temp_proc = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
+	tmp_command = "'" + command.replace(" ", "' '") + "'"
+	temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
 	temp_out = temp_proc.communicate()[0]
 
 	if temp_proc.poll() == None:
@@ -605,7 +605,10 @@ try:
 		from_UE(5, 'OK', 'channel0_at', 1, 1)
 	super_print('============================================')
 #====================================================================================================================
-	
+
+#====================================================================================================================
+#	Main loop
+#====================================================================================================================	
 	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
 	from_UE(2, '->', 'channel2_console', 0, 1)
 	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
@@ -623,9 +626,7 @@ try:
 
 	if proto == 0:
 		ssl_close_server()
-
-
-
+#====================================================================================================================
 
 finally:
 	super_print('\r\n')		
