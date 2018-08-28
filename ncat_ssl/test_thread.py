@@ -1,4 +1,6 @@
 import sys
+import time
+import shlex
 from subprocess import PIPE, Popen
 from threading  import Thread
 
@@ -14,12 +16,14 @@ def enqueue_output(out, queue):
 		queue.put(line)
 	out.close()
 
-p = Popen(["ping", "8.8.8.8"], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
+str3 = 'ping 8.8.8.8 -r'
+
+p = Popen(shlex.split(str3), stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
 q = Queue()
 t = Thread(target=enqueue_output, args=(p.stdout, q))
 t.daemon = True # thread dies with the program
 t.start()
-
+time.sleep(1)
 # ... do other things here
 
 # read line without blocking

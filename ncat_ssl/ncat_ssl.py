@@ -19,27 +19,27 @@ import threading
 import Queue
 import signal
 import pathlib
-
+import shlex
+#====================================================================================================================
+#	Configurable parameters
+#====================================================================================================================
 proto = 0 # tls=0, dtls =1
-
 logs = 1
-
-test_iter = 100 # number of tests
-
+test_iter = 25 # number of tests
+test_ipv4v6 = 1 # ipv4=0, ipv6 =1
 uart0_at = "/dev/ttyXRUSB0"
 uart0_at_speed = 921600
-
 uart1_at = "/dev/ttyXRUSB1"
 uart1_at_speed = 921600
-
 uart2_console = "/dev/ttyXRUSB2"
 uart2_console_speed = 115200
-
 key_file_name = "rootCA.key"
 pem_file_name = "rootCA.pem"
+ssl_server_ipv4 = "172.17.57.243"
+ssl_server_ipv6 = "2001:67c:2e5c:2033:29f6:3fc1:1d87:6a76"
+#====================================================================================================================
 
-ssl_server = "172.17.57.243"
-
+ssl_server = ''
 r = '\r'
 n = '\n'
 comm_0 = 'AT' + r
@@ -60,6 +60,7 @@ comm_14 = 'AT!="infoall"' + r
 comm_15 = 'cbe"printlog 1 1"' + r
 comm_16 = 'cbe"setlog ncat finest"' + r
 comm_17 = 'AT!="showver"' + r
+comm_18 = 'AT+SQNSSEND='
 
 proc1 = ''
 proc2 = ''
@@ -72,6 +73,9 @@ line_to_send_console = ''
 line_to_send_at0 = ''
 line_to_send_at1 = ''
 close_uarts = 0
+arr_proc = []
+arr_threads = []
+arr_queue = []
 
 def timest():
 	ts = time.time()
@@ -257,13 +261,13 @@ def ncat_open_sockets(proto):
 			for i in range(1,7):         # ============== Open sockets for tls
 				spec_comm = 'AT+SQNSD=' + str(i) + ',0,' + str(5560+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
-				from_UE(60, 'OK', 'channel0_at', 1, 1)		
+				from_UE(180, 'OK', 'channel0_at', 1, 1)		
 
 		if proto == 1:         # for dtls
 			for i in range(1,7):         # ============== Opensockets for dtls
 				spec_comm = 'AT+SQNSD=' + str(i) + ',1,' + str(5570+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
-				from_UE(60, 'OK', 'channel0_at', 1, 1)
+				from_UE(180, 'OK', 'channel0_at', 1, 1)
 
 	#====================================================================================================================
 
@@ -297,7 +301,7 @@ def ncat_info():
 	to_UE('channel0_at',comm_14)  # send cbe"infoall"
 	from_UE(5, 'OK', 'channel0_at', 1, 1)
 
-	super_print(exec_command('netstat -nlp --inet'))
+	super_print(exec_command('netstat -ant'))
 
 def ssl_open_server(proto):
 
@@ -308,59 +312,27 @@ def ssl_open_server(proto):
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('=================== Threads for openssl listeners')
 	ON_POSIX = 'posix' in sys.builtin_module_names
-	global proc1
-	global proc2
-	global proc3
-	global proc4
-	global proc5
-	global proc6
-	global proc7
-	if proto == 0:         # for tls
-		super_print ('     Started for TLS')
-		proc1 = subprocess.Popen(["openssl", "s_server", "-accept", "5561", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc2 = subprocess.Popen(["openssl", "s_server", "-accept", "5562", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc3 = subprocess.Popen(["openssl", "s_server", "-accept", "5563", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc4 = subprocess.Popen(["openssl", "s_server", "-accept", "5564", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc5 = subprocess.Popen(["openssl", "s_server", "-accept", "5565", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc6 = subprocess.Popen(["openssl", "s_server", "-accept", "5566", "-key", key_file_name, "-cert", pem_file_name], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+	for i in range(1,7):
 
-	if proto == 1:         # for dtls
-		super_print ('     Started for DTLS')
-		proc1 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5571"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc2 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5572"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc3 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5573"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc4 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5574"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc5 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5575"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
-		proc6 = subprocess.Popen(["openssl", "s_server", "-psk", "AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982", "-nocert", "-dtls", "-accept" ,"5576"], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+		if proto == 0:         # for tls
+			temp_str = 'openssl s_server -accept 556' + str(i) + ' -key ' + key_file_name + ' -cert ' + pem_file_name
+			if test_ipv4v6 == 1:
+				temp_str += ' -6'
+				super_print('     Starting for TLS proto server on port 556' + str(i))
+				super_print('            exec = ' + temp_str)
 
-	queue1 = Queue.Queue()
-	queue2 = Queue.Queue()
-	queue3 = Queue.Queue()
-	queue4 = Queue.Queue()
-	queue5 = Queue.Queue()
-	queue6 = Queue.Queue()
+		if proto == 1:         # for dtls
+			temp_str = 'openssl s_server -psk AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982 -nocert -dtls -accept 557' + str(i)
+			if test_ipv4v6 == 1:
+				temp_str += ' -6'
+				super_print ('     Starting for DTLS proto server on port 557' + str(i))
+				super_print('            exec = ' + temp_str)
+		arr_proc.append(subprocess.Popen(shlex.split(temp_str), stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX))
+		arr_queue.append(Queue.Queue())
+		arr_threads.append(threading.Thread(target=queue_output, args=(arr_proc[i-1].stdout, arr_queue[i-1])))
+		arr_threads[i-1].daemon = True # thread dies with the program
+		arr_threads[i-1].start()
 
-	thread1 = threading.Thread(target=queue_output, args=(proc1.stdout, queue1))
-	thread2 = threading.Thread(target=queue_output, args=(proc2.stdout, queue2))	
-	thread3 = threading.Thread(target=queue_output, args=(proc3.stdout, queue3))
-	thread4 = threading.Thread(target=queue_output, args=(proc4.stdout, queue4))
-	thread5 = threading.Thread(target=queue_output, args=(proc5.stdout, queue5))
-	thread6 = threading.Thread(target=queue_output, args=(proc6.stdout, queue6))
-
-
-	thread1.daemon = True # thread dies with the program
-	thread2.daemon = True # thread dies with the program	
-	thread3.daemon = True # thread dies with the program
-	thread4.daemon = True # thread dies with the program
-	thread5.daemon = True # thread dies with the program
-	thread6.daemon = True # thread dies with the program
-
-	thread1.start()
-	thread2.start()
-	thread3.start()
-	thread4.start()
-	thread5.start()
-	thread6.start()
 	super_print('============================================')
 	#====================================================================================================================
 
@@ -369,30 +341,20 @@ def ssl_close_server():
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('=================== Threads for openssl listeners')
 	super_print ('     Closed SSL server')
-	if proc1 != '' and proc1.poll() == None:
-		proc1.terminate()
 
-	if proc2 != '' and proc2.poll() == None:
-		proc2.terminate()
-
-	if proc3 != '' and proc3.poll() == None:
-		proc3.terminate()
-
-	if proc4 != '' and proc4.poll() == None:
-		proc4.terminate()
-
-	if proc5 != '' and proc5.poll() == None:
-		proc5.terminate()
-
-	if proc6 != '' and proc6.poll() == None:
-		proc6.terminate()
+	for i in range(1,7):
+		try:
+			if arr_proc[i-1].poll() == None:
+				arr_proc[i-1].terminate()
+				arr_proc[i-1].clear()
+		except IndexError:
+			super_print ('     Cant close, proc ' + str(i) + ' for openssl does not exist.')
 	super_print('============================================')
 
 def exec_command(command):
 	ON_POSIX = 'posix' in sys.builtin_module_names
-	tmp_command = "'" + command.replace(" ", "' '") + "'"
 
-	temp_proc = subprocess.Popen([tmp_command], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
+	temp_proc = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX, shell=True)
 	temp_out = temp_proc.communicate()[0]
 
 	if temp_proc.poll() == None:
@@ -403,7 +365,7 @@ def super_print(super_string):
 	print(super_string)
 	log_terminal.write('[' + timest() + ']' + ' ' + super_string+'\r\n')
 	
-def test_case_1(proto):
+def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
 
 	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
 		ssl_open_server(1)
@@ -419,10 +381,10 @@ def test_case_1(proto):
 	time.sleep(5)
 
 	channelDetection()
-	'''
+	
 	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
 	from_UE(2, '->', 'channel2_console', 0, 1)		
-	'''
+	
 	ncat_info()
 	ncat_close_sockets()
 	ncat_info()
@@ -431,7 +393,8 @@ def test_case_1(proto):
 
 	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed
 		ssl_close_server()
-	time.sleep(3)   # Just open/close NCAT SSL TLS/DTLS sessions in loop
+	time.sleep(3)
+
 
 try:
 
@@ -453,16 +416,23 @@ try:
 
 	log_at1 = open(name_time+'_at1.txt', 'w')
 	log_at1.write('Log from AT1\r\n')
+
+	if test_ipv4v6 == 1:
+		ssl_server = ssl_server_ipv6
+	else:
+		ssl_server = ssl_server_ipv4
 	if proto == 0:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= SSL/TLS =============================')	
-		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n')
+		super_print('     Will be provided ' + str(test_iter) + ' iterations')
+		super_print('     Server address = ' + ssl_server)
 	else:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= SSL/DTLS =============================')				
-		super_print('     Will be provided ' + str(test_iter) + ' iterations'+ '\r\n')
+		super_print('     Will be provided ' + str(test_iter) + ' iterations')
+		super_print('     Server address = ' + ssl_server)		
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('======================= Log files creation finished')
@@ -534,11 +504,8 @@ try:
 	thread_at0.start()
 	thread_at1.start()	
 	thread_console.start()	
-
-
 	super_print('     Done.')
 	super_print('============================================')
-
 #====================================================================================================================
 
 
@@ -638,12 +605,12 @@ try:
 		from_UE(5, 'OK', 'channel0_at', 1, 1)
 	super_print('============================================')
 #====================================================================================================================
-	'''
+	
 	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
 	from_UE(2, '->', 'channel2_console', 0, 1)
 	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
 	from_UE(2, '->', 'channel2_console', 0, 1)
-	'''
+	
 	if proto == 0:
 		ssl_open_server(0)
 
@@ -656,6 +623,9 @@ try:
 
 	if proto == 0:
 		ssl_close_server()
+
+
+
 
 finally:
 	super_print('\r\n')		
