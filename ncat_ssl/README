@@ -1,0 +1,55 @@
+#############################################
+#  NCAT SSL Transparency testing framework  #
+#  Maksym Vysochinenko                      #
+#  2018-08-14                               #
+#  version 1 (ncat_ssl_v1.py)               #
+#############################################
+
+The python script ncat_ssl.py provide endurance testing for NCAT software module with SSL encription. Main case is find mulfunctions during storing/restoring NCAT SSL sockets over LPM PSPM suspending/resuming process. Current version of the script supports TLS/DTLS protocols in IPv4 or IPv6 addressing scheme. Dedicated logging for AT0, AT1, CONSOLE channels and for terminal output is available. Log files will be saved at the same directory. To run the script, user have to define IPv4 or IPv6 addresses for local PC. To run the test compaign for SSL/TLS, generating KEY (.key) and Certificate (.pem) files are requared, it could be done with next commands:
+
+openssl genrsa -out rootCA.key 2048
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+
+Two files rootCA.key and rootCA.pem have to be placed at the same directory where script will be run. Also, before execute script input parameters have to be configured in the header of the .py file:
+
+#====================================================================================================================
+#	Configurable parameters
+#====================================================================================================================
+proto = 1 			# define the protocol: 0 = tls, 1 = dtls
+logs = 1			# write logs to files: 1 = enable, 0 = disable 
+test_iter = 25 		# number of iterations for each test_case
+test_ipv4v6 = 0 	# addressing scheme: 0 = IPv4, 1 = IPv6
+
+uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
+uart0_at_speed = 921600
+
+uart1_at = "/dev/ttyXRUSB1"			# section for AT1 channel configuration
+uart1_at_speed = 921600
+
+uart2_console = "/dev/ttyXRUSB2"	# section for CONSOLE channel configuration
+uart2_console_speed = 115200
+
+key_file_name = "rootCA.key"		# define name of the KEY file
+pem_file_name = "rootCA.pem"		# define name of the CERTIFICATE file
+
+ssl_server_ipv4 = "172.17.57.243"							# local IPv4 address to bind openssl server
+ssl_server_ipv6 = "2001:67c:2e5c:2033:a8:b11:79ae:8b0d"		# local IPv6 address to bind openssl server
+
+#====================================================================================================================
+
+Required libs for python:
+	serial
+	time
+	datetime
+	sys
+	string
+	os
+	subprocess
+	threading
+	Queue
+	signal
+	pathlib
+	shlex
+
+Required apps on PC:
+	openssl
