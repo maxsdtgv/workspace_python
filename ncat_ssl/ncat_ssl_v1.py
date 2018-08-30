@@ -25,7 +25,7 @@ import shlex
 #====================================================================================================================
 proto = 1 			# define the protocol: 0 = tls, 1 = dtls
 logs = 1			# write logs to files: 1 = enable, 0 = disable 
-test_iter = 25 		# number of iterations for each test_case
+test_iter = 10 		# number of iterations for each test_case
 test_ipv4v6 = 0 	# addressing scheme: 0 = IPv4, 1 = IPv6
 
 uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
@@ -353,22 +353,20 @@ def ssl_open_server(proto):
 
 def ssl_close_server():
 	super_print('\r\n')		
-	sys.stdout.write('[' + timest() + '] ')
 	super_print('=================== Close threads for openssl listeners')
 	super_print ('     Closing SSL server')
 	for i in range(0,6):
-		
-		if arr_proc[0].poll() == None:
-			try:
+		try:
+
+			if arr_proc[0] and arr_proc[0].poll() == None:
 				arr_proc[0].terminate()
 				super_print ('     Proc ' + str(i+1) + ' terminated.'+' obj='+str(arr_proc[0]))
 				arr_proc.pop(0)
-			except IndexError:
-				super_print ('     Exception. Proc ' + str(i+1) + ' IndexError.')
-		else:
-			super_print ('     Cant close, proc ' + str(i+1) + ' for openssl does not exist.')
+			else:
+				super_print ('     Cant close, proc ' + str(i+1) + ' for openssl does not exist.')
+		except IndexError:
+			super_print ('     Exception. Proc ' + str(i+1) + ' IndexError.')		
 		time.sleep(.6)
-
 	super_print('============================================')
 
 def exec_command(command):
@@ -395,7 +393,9 @@ def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
 	ncat_info()
 
 	gotoPSPM(60)
-	time.sleep(5)
+
+	super_print ('Waiting for 10 seconds...')
+	time.sleep(10)
 
 	wakeupPSPM(15)
 	time.sleep(5)
