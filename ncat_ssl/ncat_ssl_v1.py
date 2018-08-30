@@ -26,7 +26,7 @@ import shlex
 proto = 1 			# define the protocol: 0 = tls, 1 = dtls
 logs = 1			# write logs to files: 1 = enable, 0 = disable 
 test_iter = 10 		# number of iterations for each test_case
-test_ipv4v6 = 0 	# addressing scheme: 0 = IPv4, 1 = IPv6
+test_ipv4v6 = 1 	# addressing scheme: 0 = IPv4, 1 = IPv6
 
 uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
 uart0_at_speed = 921600
@@ -41,7 +41,7 @@ key_file_name = "rootCA.key"		# define name of the KEY file
 pem_file_name = "rootCA.pem"		# define name of the CERTIFICATE file
 
 ssl_server_ipv4 = "172.17.57.243"							# local IPv4 address to bind openssl server
-ssl_server_ipv6 = "2001:67c:2e5c:2033:a8:b11:79ae:8b0d"		# local IPv6 address to bind openssl server
+ssl_server_ipv6 = "2001:67c:2e5c:2033:24f:bd21:73d5:4793"		# local IPv6 address to bind openssl server
 
 #====================================================================================================================
 
@@ -266,14 +266,15 @@ def ncat_open_sockets(proto):
 			for i in range(1,7):         # ============== Open sockets for tls
 				spec_comm = 'AT+SQNSD=' + str(i) + ',0,' + str(5560+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
-				from_UE(180, 'OK', 'channel0_at', 1, 1)		
+				from_UE(180, 'OK', 'channel0_at', 1, 1)	
+				time.sleep(2)	
 
 		if proto == 1:         # for dtls
 			for i in range(1,7):         # ============== Opensockets for dtls
 				spec_comm = 'AT+SQNSD=' + str(i) + ',1,' + str(5570+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
 				from_UE(180, 'OK', 'channel0_at', 1, 1)
-
+				time.sleep(2)
 	#====================================================================================================================
 
 def ncat_close_sockets():
