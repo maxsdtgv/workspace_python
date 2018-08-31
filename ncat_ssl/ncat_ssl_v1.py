@@ -28,12 +28,18 @@ logs = 1			# write logs to files: 1 = enable, 0 = disable
 test_iter = 10 		# number of iterations for each test_case
 test_ipv4v6 = 1 	# addressing scheme: 0 = IPv4, 1 = IPv6
 
+uart0_enable = 1					# enable uart0 channel
+uart0_log = 1						# frite logs to file for uart0 channel
 uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
 uart0_at_speed = 921600
 
+uart1_enable = 0					# enable uart1 channel
+uart1_log = 0						# frite logs to file for uart1 channel
 uart1_at = "/dev/ttyXRUSB1"			# section for AT1 channel configuration
 uart1_at_speed = 921600
 
+uart2_enable = 1					# enable uart2 channel
+uart2_log = 1						# frite logs to file for uart2 channel
 uart2_console = "/dev/ttyXRUSB2"	# section for CONSOLE channel configuration
 uart2_console_speed = 115200
 
@@ -41,7 +47,7 @@ key_file_name = "rootCA.key"		# define name of the KEY file
 pem_file_name = "rootCA.pem"		# define name of the CERTIFICATE file
 
 ssl_server_ipv4 = "172.17.57.243"							# local IPv4 address to bind openssl server
-ssl_server_ipv6 = "2001:67c:2e5c:2033:24f:bd21:73d5:4793"		# local IPv6 address to bind openssl server
+ssl_server_ipv6 = "2001:67c:2e5c:2033:3def:ef2a:e07d:5d11"		# local IPv6 address to bind openssl server
 
 #====================================================================================================================
 
@@ -55,7 +61,7 @@ comm_0 = 'AT' + r
 comm_1 = '' + r
 comm_2 = 'ATE' + r
 comm_3 = 'AT+CPSMS=1,,,"10100101","00000000"' + r
-comm_4 = 'cbe"setextwake b=0xC00 m=0x3FFF"' + r
+comm_4 = 'cbe"setextwake b=0x400 m=0x3FFF"' + r
 comm_5 = 'AT+SQNSNVW="certificate",0,'
 comm_6 = 'AT+SQNSPCFG=1,2,"",1,0,,,""' + r
 comm_7 = 'cbe"cat /fs/sqn/etc/sqn_certs/0.crt"' + r
@@ -92,22 +98,35 @@ def from_UE(ti, ts, tchannel, tprintout, check_response):
 	global queue_at0
 	global queue_at1
 	global queue_console	
+	global uart0_enable
+	global uart1_enable
+	global uart2_enable
 
 	matchFound = 0
 	lineslist = []
 	for tu in range(0, ti):
 		time.sleep(1)
+
 		if tchannel == 'channel0_at':
-			while not queue_at0.empty():
-				lineslist.append(queue_at0.get())
+			if uart0_enable == 1:
+				while not queue_at0.empty():
+					lineslist.append(queue_at0.get())
+			else:
+				super_print('     AT0 port is disabled.')
 
 		if tchannel == 'channel1_at':
-			while not queue_at1.empty():
-				lineslist.append(queue_at1.get())
+			if uart1_enable == 1:
+				while not queue_at1.empty():
+					lineslist.append(queue_at1.get())
+			else:
+				super_print('     AT1 port is disabled.')
 
 		if tchannel == 'channel2_console':
-			while not queue_console.empty():
-				lineslist.append(queue_console.get())
+			if uart2_enable == 1:
+				while not queue_console.empty():
+					lineslist.append(queue_console.get())
+			else:
+				super_print('     CONSOLE port is disabled.')
 
 		for line in lineslist:
 			line = line.decode().replace('\r', '').replace('\n', '')
@@ -129,26 +148,52 @@ def to_UE(channel, sty):
 	global line_to_send_at0	
 	global line_to_send_at1	
 	global line_to_send_console
+	global uart0_enable
+	global uart1_enable
+	global uart2_enable
 
 	if channel == 'channel0_at':
-		line_to_send_at0 = sty
+		if uart0_enable == 1:			
+			line_to_send_at0 = sty
+		else:
+			super_print('     Cant send command = '+ str(sty)+'. AT0 is disabled.')
 
 	if channel == 'channel1_at':
-		line_to_send_at1 = sty
+		if uart1_enable == 1:
+			line_to_send_at1 = sty
+		else:
+			super_print('     Cant send command = '+ str(sty)+'. AT1 is disabled.')
 
 	if channel == 'channel2_console':
-		line_to_send_console = sty
+		if uart2_enable == 1:
+			line_to_send_console = sty
+		else:
+			super_print('     Cant send command = '+ str(sty)+'. CONSOLE is disabled.')
+
 	return
 
 def gotoPSPM(waitPSPM):
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('========================== goto PSPM =================================')
-	super_print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set False')
-	super_print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set False')
-	super_print('     Console port rts = ' +str(channel2_console.rts))
-	channel0_at.rts = False
-	channel1_at.rts = False
+	if uart0_enable == 1:
+		super_print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set False')
+		channel0_at.rts = False
+	else:
+		super_print('     AT0 port is disabled.')
+
+	if uart1_enable == 1:
+		super_print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set False')
+		channel1_at.rts = False
+	else:
+		super_print('     AT1 port is disabled.')
+
+	if uart2_enable == 1:
+		super_print('     Console port rts = ' +str(channel2_console.rts))
+	else:
+		super_print('     CONSOLE port is disabled.')
+	
+
 	super_print('     Waiting for PSPM ...')
 	if from_UE(waitPSPM, 'eem: Suspending...', 'channel2_console', 0, 1)	 == 1:
 		super_print('     UE in PSPM mode! (eem: Suspending...)')			
@@ -160,11 +205,24 @@ def wakeupPSPM(waitPSPM):
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')		
 	super_print('========================== Resume from PSPM ===========================')
-	super_print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set True')
-	super_print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set True')
-	super_print('     Console port rts = ' +str(channel2_console.rts))
-	channel0_at.rts = True
-	channel1_at.rts = True
+	if uart0_enable == 1:
+		super_print('     AT0 port rts = ' + str(channel0_at.rts) + ', will set True')
+		channel0_at.rts = True
+	else:
+		super_print('     AT0 port is disabled.')
+
+	if uart1_enable == 1:
+		super_print('     AT1 port rts = ' + str(channel1_at.rts) + ', will set True')
+		channel1_at.rts = True
+	else:
+		super_print('     AT1 port is disabled.')
+
+	if uart2_enable == 1:
+		super_print('     Console port rts = ' +str(channel2_console.rts))
+	else:
+		super_print('     CONSOLE port is disabled.')
+
+
 	super_print('     Resuming from PSPM ...')
 	if from_UE(waitPSPM, 'eem: Resuming...', 'channel2_console', 0, 1)	 == 1:
 		super_print('     UE in PSO state! (eem: Resuming...)')
@@ -187,9 +245,9 @@ def channelDetection():
 		super_print('!    Error. AT channel does not responce')
 		sys.exit()
 
-	time.sleep(9)
+	time.sleep(12)
 	to_UE('channel2_console',comm_1)  # ============== send enter
-	if from_UE(5, '->', 'channel2_console', 0, 1) == 1:
+	if from_UE(7, '->', 'channel2_console', 0, 1) == 1:
 		super_print('     Console channel detected `->` found')	
 	else: 
 		super_print('!    Error. Console channel does not responce')
@@ -199,56 +257,74 @@ def queue_channel(out, nqueue):
 	global line_to_send_at0
 	global line_to_send_at1		
 	global line_to_send_console
-
+	global close_uarts
 	while True:	#	nqueue.put(line)
 		if close_uarts == 1:
-			out.close()
+			if out == channel0_at:
+				if uart0_enable == 1:
+					out.close()
+					super_print('     AT0 closing ...')
+			if out == channel1_at:
+				if uart1_enable == 1:
+					out.close()
+					super_print('     AT1 closing ...')
+			if out == channel2_console:
+				if uart2_enable == 1:
+					out.close()			
+					super_print('     CONSOLE closing ...')
+			close_uarts = 0
 			break
 		if out == channel0_at:
-			tmp_line = out.readlines()
-			for line in tmp_line:
-				nqueue.put(line.replace('\r','').replace('\n',''))
-				log_at0.write('[' + timest() + ']' + ' ' + line)
-			if line_to_send_at0 != '':
-				time.sleep(.1)
-				out.write('\r')
-				time.sleep(.1)				
-				out.readlines()
-				time.sleep(.1)
-				while not nqueue.empty():
-					nqueue.get()				
-				out.write(line_to_send_at0)
-				line_to_send_at0 = ''
+			if uart0_enable == 1:
+				tmp_line = out.readlines()
+				for line in tmp_line:
+					nqueue.put(line.replace('\r','').replace('\n',''))
+					if uart0_log == 1:
+						log_at0.write('[' + timest() + ']' + ' ' + line)
+				if line_to_send_at0 != '':
+					time.sleep(.1)
+					out.write('\r')
+					time.sleep(.1)				
+					out.readlines()
+					time.sleep(.1)
+					while not nqueue.empty():
+						nqueue.get()				
+					out.write(line_to_send_at0)
+					line_to_send_at0 = ''
 
 		if out == channel1_at:
-			tmp_line = out.readlines()
-			for line in tmp_line:
-				nqueue.put(line.replace('\r','').replace('\n',''))
-				log_at1.write('[' + timest() + ']' + ' ' + line)				
-			if line_to_send_at1 != '':
-				time.sleep(.1)
-				out.write('\r')
-				time.sleep(.1)				
-				out.readlines()
-				time.sleep(.1)
-				while not nqueue.empty():
-					nqueue.get()	
-				out.write(line_to_send_at1)
-				line_to_send__at1 = ''
+			if uart1_enable == 1:
+				tmp_line = out.readlines()
+				for line in tmp_line:
+					nqueue.put(line.replace('\r','').replace('\n',''))
+					if uart0_log == 1:
+						log_at1.write('[' + timest() + ']' + ' ' + line)				
+				if line_to_send_at1 != '':
+					time.sleep(.1)
+					out.write('\r')
+					time.sleep(.1)				
+					out.readlines()
+					time.sleep(.1)
+					while not nqueue.empty():
+						nqueue.get()	
+					out.write(line_to_send_at1)
+					line_to_send__at1 = ''
 
 		if out == channel2_console:
-			tmp_line = out.readlines()
-			for line in tmp_line:
-				nqueue.put(line.replace('\r','').replace('\n',''))
-				log_console.write('[' + timest() + ']' + ' ' + line)									
-			if line_to_send_console != '':
-				time.sleep(.1)				
-				out.readlines()				
-				time.sleep(.1)
-				while not nqueue.empty():
-					nqueue.get()	
-				out.write(line_to_send_console)
-				line_to_send_console = ''	
+			if uart2_enable == 1:
+				tmp_line = out.readlines()
+				for line in tmp_line:
+					nqueue.put(line.replace('\r','').replace('\n',''))
+					if uart0_log == 1:
+						log_console.write('[' + timest() + ']' + ' ' + line)									
+				if line_to_send_console != '':
+					time.sleep(.1)				
+					out.readlines()				
+					time.sleep(.1)
+					while not nqueue.empty():
+						nqueue.get()	
+					out.write(line_to_send_console)
+					line_to_send_console = ''	
 
 def queue_output(out, nqueue):
 	for line in iter(out.readline, b''):
@@ -421,26 +497,36 @@ try:
 #====================================================================================================================
 #	Main configs
 #====================================================================================================================
-
+	print('\r\n')		
+	sys.stdout.write('[' + timest() + '] ')
+	print('======================= Log files creation ...')
 
 	tst = time.time()
 	name_time = datetime.datetime.fromtimestamp(tst).strftime('%Y-%m-%d_%H:%M:%S')
 	log_terminal = open(name_time+'_terminal.txt', 'w')
 	log_terminal.write('Log from terminal\r\n')
-	
-	log_console = open(name_time+'_console.txt', 'w')
-	log_console.write('Log from console\r\n')
+	super_print ('     Log file for terminal is created - ' + name_time + '_terminal.txt')
 
-	log_at0 = open(name_time+'_at0.txt', 'w')
-	log_at0.write('Log from AT0\r\n')
+	if uart0_log == 1:
+		log_at0 = open(name_time+'_at0.txt', 'w')
+		log_at0.write('Log from AT0\r\n')
+		super_print ('     Log file for AT0 is created - ' + name_time+'_at0.txt')
 
-	log_at1 = open(name_time+'_at1.txt', 'w')
-	log_at1.write('Log from AT1\r\n')
+	if uart1_log == 1:
+		log_at1 = open(name_time+'_at1.txt', 'w')
+		log_at1.write('Log from AT1\r\n')
+		super_print ('     Log file for AT1 is created - ' + name_time+'_at1.txt')
+
+	if uart2_log == 1:	
+		log_console = open(name_time+'_console.txt', 'w')
+		log_console.write('Log from console\r\n')
+		super_print ('     Log file for console is created - ' + name_time + '_console.txt')
 
 	if test_ipv4v6 == 1:
 		ssl_server = ssl_server_ipv6
 	else:
 		ssl_server = ssl_server_ipv4
+
 	if proto == 0:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
@@ -453,13 +539,7 @@ try:
 		super_print('======================= SSL/DTLS =============================')				
 		super_print('     Will be provided ' + str(test_iter) + ' iterations')
 		super_print('     Server address = ' + ssl_server)		
-	super_print('\r\n')		
-	sys.stdout.write('[' + timest() + '] ')
-	super_print('======================= Log files creation finished')
-	super_print ('     Log file for terminal is created - ' + name_time + '_terminal.txt')
-	super_print ('     Log file for AT0 is created - ' + name_time+'_at0.txt')
-	super_print ('     Log file for AT1 is created - ' + name_time+'_at1.txt')
-	super_print ('     Log file for console is created - ' + name_time + '_console.txt')
+
 #====================================================================================================================
 
 #====================================================================================================================
@@ -468,13 +548,24 @@ try:
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('======================= Open uarts ...')
-	channel0_at = serial.Serial(uart0_at, uart0_at_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
-	channel1_at = serial.Serial(uart1_at, uart1_at_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
-	channel2_console = serial.Serial(uart2_console, uart2_console_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
-
-	super_print('     AT0 port = ' + channel0_at.name + ' speed = ' + str(uart0_at_speed) + ' rts = ' + str(channel0_at.rts))
-	super_print('     AT1 port = ' + channel1_at.name + ' speed = ' + str(uart1_at_speed) + ' rts = ' + str(channel1_at.rts))
-	super_print('     Console port = ' + channel2_console.name + ' speed = ' + str(uart2_console_speed) + ' rts = ' +str(channel2_console.rts))
+	if uart0_enable == 1:
+		channel0_at = serial.Serial(uart0_at, uart0_at_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
+		super_print('     AT0 port = ' + channel0_at.name + ' speed = ' + str(uart0_at_speed) + ' rts = ' + str(channel0_at.rts))
+	
+	else:
+		channel0_at = None
+	
+	if uart1_enable == 1:
+		channel1_at = serial.Serial(uart1_at, uart1_at_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
+		super_print('     AT1 port = ' + channel1_at.name + ' speed = ' + str(uart1_at_speed) + ' rts = ' + str(channel1_at.rts))
+	else:
+		channel1_at = None
+	
+	if uart2_enable == 1:
+		channel2_console = serial.Serial(uart2_console, uart2_console_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
+		super_print('     Console port = ' + channel2_console.name + ' speed = ' + str(uart2_console_speed) + ' rts = ' +str(channel2_console.rts))
+	else:
+		channel2_console = None
 #====================================================================================================================
 
 #====================================================================================================================
@@ -506,25 +597,28 @@ try:
 	super_print('\r\n')		
 	sys.stdout.write('[' + timest() + '] ')
 	super_print('=================== Threads for uart readings')
-	super_print('     Create queue ...')
-	queue_console = Queue.Queue()
-	queue_at0 = Queue.Queue()
-	queue_at1 = Queue.Queue()
-	super_print('     Create threads ...')
-	thread_at0 = threading.Thread(target=queue_channel, args=(channel0_at, queue_at0))
-	thread_at1 = threading.Thread(target=queue_channel, args=(channel1_at, queue_at1))		
-	thread_console = threading.Thread(target=queue_channel, args=(channel2_console, queue_console))
+	super_print('     Create threads and queues ...')
+	if uart0_enable == 1:
+		queue_at0 = Queue.Queue()		
+		thread_at0 = threading.Thread(target=queue_channel, args=(channel0_at, queue_at0))
+		thread_at0.daemon = True # thread dies with the program
+		thread_at0.start()
+		super_print('     Threads and queue for AT0 ...')
+	if uart1_enable == 1:
+		queue_at1 = Queue.Queue()
+		thread_at1 = threading.Thread(target=queue_channel, args=(channel1_at, queue_at1))	
+		thread_at1.daemon = True # thread dies with the program
+		thread_at1.start()
+		super_print('     Threads and queue for AT1 ...')		
+	if uart2_enable == 1:
+		queue_console = Queue.Queue()
+		thread_console = threading.Thread(target=queue_channel, args=(channel2_console, queue_console))
+		thread_console.daemon = True # thread dies with the program
+		thread_console.start()
+		super_print('     Threads and queue for CONSOLE ...')			
 
-	thread_at0.daemon = True # thread dies with the program
-	thread_at1.daemon = True # thread dies with the program
-	thread_console.daemon = True # thread dies with the program
-
-	super_print('     Start threads ...')
-	thread_at0.start()
-	thread_at1.start()	
-	thread_console.start()	
 	super_print('     Done.')
-	super_print('============================================')
+
 #====================================================================================================================
 
 #====================================================================================================================
@@ -656,18 +750,22 @@ finally:
 	super_print('         Close uarts ...')
 	close_uarts = 1
 	time.sleep(.5)
-	if not channel0_at.isOpen():
+	if uart0_enable == 1 and not channel0_at.isOpen():
 		super_print('             AT0 is closed.')
-	if not channel1_at.isOpen():
+	if uart1_enable == 1 and not channel1_at.isOpen():
 		super_print('             AT1 is closed.')
-	if not channel2_console.isOpen():
+	if uart2_enable == 1 and not channel2_console.isOpen():
 		super_print('             CONSOLE is closed.')
 
 	super_print('         Close subpocesses ...')
 	ssl_close_server()
 
 	super_print('         Close log files ...')
-	log_console.close()
-	log_at0.close()
-	log_at1.close()	
+
+	if uart0_log == 1:
+		log_at0.close()
+	if uart1_log == 1:
+		log_at1.close()	
+	if uart2_log == 1:
+		log_console.close()
 	log_terminal.close()	
