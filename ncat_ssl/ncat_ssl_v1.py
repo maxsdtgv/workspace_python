@@ -25,16 +25,17 @@ import shlex
 #====================================================================================================================
 proto = 1 			# define the protocol: 0 = tls, 1 = dtls
 logs = 1			# write logs to files: 1 = enable, 0 = disable 
-test_iter = 10 		# number of iterations for each test_case
-test_ipv4v6 = 1 	# addressing scheme: 0 = IPv4, 1 = IPv6
+test_iter = 4 		# number of iterations for each test_case
+test_ipv4v6 = 0 	# addressing scheme: 0 = IPv4, 1 = IPv6
+ssl_server_log = 1	# enable logging for all ssl servers
 
 uart0_enable = 1					# enable uart0 channel
 uart0_log = 1						# frite logs to file for uart0 channel
 uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
 uart0_at_speed = 921600
 
-uart1_enable = 0					# enable uart1 channel
-uart1_log = 0						# frite logs to file for uart1 channel
+uart1_enable = 1					# enable uart1 channel
+uart1_log = 1						# frite logs to file for uart1 channel
 uart1_at = "/dev/ttyXRUSB1"			# section for AT1 channel configuration
 uart1_at_speed = 921600
 
@@ -46,8 +47,8 @@ uart2_console_speed = 115200
 key_file_name = "rootCA.key"		# define name of the KEY file
 pem_file_name = "rootCA.pem"		# define name of the CERTIFICATE file
 
-ssl_server_ipv4 = "172.17.57.243"							# local IPv4 address to bind openssl server
-ssl_server_ipv6 = "2001:67c:2e5c:2033:3def:ef2a:e07d:5d11"		# local IPv6 address to bind openssl server
+ssl_server_ipv4 = "172.17.57.243"								# local IPv4 address to bind openssl server
+ssl_server_ipv6 = "2001:67c:2e5c:2033:286d:f102:48e1:7abf"		# local IPv6 address to bind openssl server
 
 #====================================================================================================================
 
@@ -57,6 +58,9 @@ ssl_server_ipv6 = "2001:67c:2e5c:2033:3def:ef2a:e07d:5d11"		# local IPv6 address
 ssl_server = ''
 r = '\r'
 n = '\n'
+
+send_str = 'sdff sdf sf s df sd f sdsdfdsfsdf034950 tesg92u94t394'+n
+
 comm_0 = 'AT' + r
 comm_1 = '' + r
 comm_2 = 'ATE' + r
@@ -82,10 +86,12 @@ comm_20 = 'AT!="fsm"' + r
 line_to_send_console = ''
 line_to_send_at0 = ''
 line_to_send_at1 = ''
+recv_str = ''
 close_uarts = 0
 arr_proc = []
 arr_threads = []
-arr_queue = []
+arr_threads_log = []
+arr_threads_queue = []
 #====================================================================================================================
 
 def timest():
@@ -140,7 +146,7 @@ def from_UE(ti, ts, tchannel, tprintout, check_response):
 		if matchFound == 1:
 			break
 	if check_response == 1 and matchFound == 0:
-		super_print('Expected responce '+ ts + ' NOT FOUND!!!')
+		super_print('Expected response '+ ts + ' NOT FOUND!!!')
 		sys.exit()
 	return matchFound
 
@@ -241,15 +247,15 @@ def channelDetection():
 	to_UE('channel0_at',comm_0)  # ============== send AT
 	if from_UE(5, 'OK', 'channel0_at', 0, 1) == 1:
 		super_print('     AT channel detected `OK` found')
-	else: 
+	else:
 		super_print('!    Error. AT channel does not responce')
 		sys.exit()
 
-	time.sleep(12)
+	time.sleep(5)
 	to_UE('channel2_console',comm_1)  # ============== send enter
 	if from_UE(7, '->', 'channel2_console', 0, 1) == 1:
 		super_print('     Console channel detected `->` found')	
-	else: 
+	else:
 		super_print('!    Error. Console channel does not responce')
 		sys.exit()
 
@@ -278,17 +284,17 @@ def queue_channel(out, nqueue):
 			if uart0_enable == 1:
 				tmp_line = out.readlines()
 				for line in tmp_line:
-					nqueue.put(line.replace('\r','').replace('\n',''))
+					nqueue.put_nowait(line.replace('\r','').replace('\n',''))
 					if uart0_log == 1:
 						log_at0.write('[' + timest() + ']' + ' ' + line)
 				if line_to_send_at0 != '':
-					time.sleep(.1)
-					out.write('\r')
-					time.sleep(.1)				
-					out.readlines()
-					time.sleep(.1)
-					while not nqueue.empty():
-						nqueue.get()				
+					#time.sleep(.1)
+					#out.write('\r')
+					#time.sleep(.1)				
+					#out.readlines()
+					#time.sleep(.1)
+					#while not nqueue.empty():
+					#	nqueue.get_nowait()
 					out.write(line_to_send_at0)
 					line_to_send_at0 = ''
 
@@ -296,17 +302,17 @@ def queue_channel(out, nqueue):
 			if uart1_enable == 1:
 				tmp_line = out.readlines()
 				for line in tmp_line:
-					nqueue.put(line.replace('\r','').replace('\n',''))
+					nqueue.put_nowait(line.replace('\r','').replace('\n',''))
 					if uart0_log == 1:
 						log_at1.write('[' + timest() + ']' + ' ' + line)				
 				if line_to_send_at1 != '':
-					time.sleep(.1)
-					out.write('\r')
-					time.sleep(.1)				
-					out.readlines()
-					time.sleep(.1)
-					while not nqueue.empty():
-						nqueue.get()	
+					#time.sleep(.1)
+					#out.write('\r')
+					#time.sleep(.1)				
+					#out.readlines()
+					#time.sleep(.1)
+					#while not nqueue.empty():
+					#	nqueue.get_nowait()
 					out.write(line_to_send_at1)
 					line_to_send__at1 = ''
 
@@ -314,22 +320,49 @@ def queue_channel(out, nqueue):
 			if uart2_enable == 1:
 				tmp_line = out.readlines()
 				for line in tmp_line:
-					nqueue.put(line.replace('\r','').replace('\n',''))
+					nqueue.put_nowait(line.replace('\r','').replace('\n',''))
 					if uart0_log == 1:
 						log_console.write('[' + timest() + ']' + ' ' + line)									
 				if line_to_send_console != '':
-					time.sleep(.1)				
-					out.readlines()				
-					time.sleep(.1)
-					while not nqueue.empty():
-						nqueue.get()	
+					#time.sleep(.1)				
+					#out.readlines()				
+					#time.sleep(.1)
+					#while not nqueue.empty():
+					#	nqueue.get_nowait()
 					out.write(line_to_send_console)
 					line_to_send_console = ''	
 
-def queue_output(out, nqueue):
-	for line in iter(out.readline, b''):
-		nqueue.put(line)
-	out.close()
+def queue_output(out, ni):
+	while True:
+		for line in iter(out.readline, b''):
+			arr_threads_queue[ni-1].put_nowait(line)
+			if ssl_server_log == 1 and line !='':
+				arr_threads_log[ni-1].write('[' + timest() + ']' + ' ' + line)
+	#out.close()
+
+def clear_queue(nqu):
+	while not arr_threads_queue[nqu].empty():
+		arr_threads_queue[nqu].get_nowait()
+
+def clear_channel_queue():
+	while not queue_at0.empty():
+		queue_at0.get_nowait()	
+	while not queue_at1.empty():
+		queue_at1.get_nowait()
+	while not queue_console.empty():
+		queue_console.get_nowait()
+
+def ncat_send_data_command_mode(nsocket, data):
+	spec_comm = 'AT+SQNSSEND=' + str(nsocket) + r
+	to_UE('channel0_at',spec_comm)  
+	from_UE(3, '>', 'channel0_at', 1, 1)
+
+	to_UE('channel0_at',data)
+	from_UE(2, '', 'channel0_at', 1, 0)
+
+	sys.stdout.write('     Sending CTRL+Z  ...')
+	to_UE('channel0_at', '\x1A')
+	from_UE(3, 'OK', 'channel0_at', 1, 1)
 
 def ncat_open_sockets(proto):
 	#====================================================================================================================
@@ -339,6 +372,7 @@ def ncat_open_sockets(proto):
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= Open NCAT SSL connections ====================')
 		if proto == 0:         # for tls
+			#for i in range(1,2):         # ============== Open sockets for tls
 			for i in range(1,7):         # ============== Open sockets for tls
 				spec_comm = 'AT+SQNSD=' + str(i) + ',0,' + str(5560+i) + ',"' + ssl_server + '",0,0,1' + r
 				to_UE('channel0_at',spec_comm)  
@@ -404,28 +438,30 @@ def ssl_open_server(proto):
 
 	del arr_proc [:]
 	del arr_threads [:]
-	del arr_queue [:]
+	del arr_threads_queue [:]
 	for i in range(1,7):
 
 		if proto == 0:         # for tls
 			temp_str = 'openssl s_server -accept 556' + str(i) + ' -key ' + key_file_name + ' -cert ' + pem_file_name
 			if test_ipv4v6 == 1:
 				temp_str += ' -6'
-			super_print('     Starting for TLS proto server on port 556' + str(i))
+			super_print('     Starting TLS server on port 556' + str(i))
 			super_print('            exec = ' + temp_str)
 
 		if proto == 1:         # for dtls
 			temp_str = 'openssl s_server -psk AABC3BDFDE2526E815D76A22A364BA76641D3360A4A5FBEA9db8bed55d406982 -nocert -dtls -accept 557' + str(i)
 			if test_ipv4v6 == 1:
 				temp_str += ' -6'
-			super_print ('     Starting for DTLS proto server on port 557' + str(i))
+			super_print ('     Starting DTLS server on port 557' + str(i))
 			super_print('            exec = ' + temp_str)
-		arr_proc.append(subprocess.Popen(shlex.split(temp_str), stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX))
-		arr_queue.append(Queue.Queue())
-		arr_threads.append(threading.Thread(target=queue_output, args=(arr_proc[i-1].stdout, arr_queue[i-1])))
+		arr_proc.append(subprocess.Popen(shlex.split(temp_str), stdin=subprocess.PIPE, stdout=subprocess.PIPE, bufsize=0, close_fds=ON_POSIX,universal_newlines=True))
+		arr_threads_queue.append(Queue.Queue())
+		arr_threads.append(threading.Thread(target=queue_output, args=(arr_proc[i-1].stdout, i)))
 		arr_threads[i-1].daemon = True # thread dies with the program
 		arr_threads[i-1].start()
-	super_print('============================================')
+		arr_threads_log[i-1].write('[' + timest() + '] ' + 'New connection ...' + r)
+		arr_threads_log[i-1].write('[' + timest() + '] ' + temp_str + r)
+
 	#====================================================================================================================
 
 def ssl_close_server():
@@ -437,14 +473,13 @@ def ssl_close_server():
 
 			if arr_proc[0] and arr_proc[0].poll() == None:
 				arr_proc[0].terminate()
-				super_print ('     Proc ' + str(i+1) + ' terminated.'+' obj='+str(arr_proc[0]))
+				super_print ('     Proc ' + str(i+1) + ' closed.'+' obj='+str(arr_proc[0]))
 				arr_proc.pop(0)
 			else:
 				super_print ('     Cant close, proc ' + str(i+1) + ' for openssl does not exist.')
 		except IndexError:
 			super_print ('     Exception. Proc ' + str(i+1) + ' IndexError.')		
 		time.sleep(.6)
-	super_print('============================================')
 
 def exec_command(command):
 	ON_POSIX = 'posix' in sys.builtin_module_names
@@ -461,7 +496,6 @@ def super_print(super_string):
 	log_terminal.write('[' + timest() + ']' + ' ' + super_string+'\r\n')
 	
 def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
-	
 	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed in each loop
 		ssl_open_server(1)
 	
@@ -469,7 +503,7 @@ def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
 	ncat_open_sockets(proto)
 	ncat_info()
 
-	gotoPSPM(60)
+	gotoPSPM(120)
 
 	super_print ('Waiting for 10 seconds...')
 	time.sleep(10)
@@ -479,9 +513,8 @@ def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
 
 	channelDetection()
 	
-	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
-	from_UE(2, '->', 'channel2_console', 0, 1)		
-	
+	setlog_ncat_finest()
+
 	ncat_info()
 	ncat_close_sockets()
 	time.sleep(2)
@@ -489,8 +522,111 @@ def test_case_1(proto): # Just open/close NCAT SSL TLS/DTLS sessions in loop
 	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed in each loop
 		ssl_close_server()
 	time.sleep(2)
+
+def test_case_2(proto): # Sending data between UE and server
+	global recv_str
 	
-	ncat_info()
+	gotoPSPM(120)
+
+	super_print ('Waiting for 10 seconds...')
+	time.sleep(10)
+
+	wakeupPSPM(15)
+	time.sleep(5)
+
+	channelDetection()
+	
+	setlog_ncat_finest()
+
+	time.sleep(.5)
+	
+	# Clear thread queues before received data on server side
+	for i in range (1,7):
+		clear_queue(i-1)
+
+	clear_channel_queue()
+
+	# Send data through sockets by turn
+	for i in range (1,7):
+		super_print('\r\n')		
+		sys.stdout.write('[' + timest() + '] ')
+		super_print('======================= Sending data to server, UE socket = ' + str(i) +' ...')
+
+		ncat_send_data_command_mode(i, send_str)
+		super_print('Sent string size on UE = ' + str(len(send_str)))
+
+		time.sleep(15)
+		#super_print('Sending string = ')
+		#uuu = ":".join("{:02x}".format(ord(c)) for c in send_str)
+		#super_print(str(uuu))
+
+		while not arr_threads_queue[i-1].empty():
+			recv_str = arr_threads_queue[i-1].get_nowait()
+
+		#super_print('Received string = ')
+		#super_print(recv_str)
+		#uuu = ":".join("{:02x}".format(ord(c)) for c in recv_str)
+		#super_print(str(uuu))
+
+		super_print('Received string size on server= ' + str(len(recv_str)))
+
+		if send_str == recv_str:
+			super_print('Strings are matched.')
+		else:
+			super_print('Received wrong string on ssl server side!')
+			super_print('Sending string = ')
+			uuu = ":".join("{:02x}".format(ord(c)) for c in send_str)
+			super_print(str(uuu))			
+			super_print('Received string = ')
+			uuu = ":".join("{:02x}".format(ord(c)) for c in recv_str)
+			super_print(str(uuu))			
+			sys.exit()
+	
+		super_print('\r\n')		
+		sys.stdout.write('[' + timest() + '] ')
+		super_print('======================= Sending data to UE, server = ' + str(i) +' ...')
+		#raw_input("Press Enter to continue...")
+		arr_proc[i-1].stdin.write(send_str)
+		super_print('Sent string size on server = ' + str(len(send_str)))		
+		#================== resume from sleep ============================================
+		spec_comm = 'AT!="ping ' + ssl_server + '"' + r
+		to_UE('channel0_at',spec_comm)  
+		from_UE(10, 'OK', 'channel0_at', 0, 0)
+		#=================================================================================
+		super_print('Waiting for URC ...')
+		from_UE(60, '+SQNSRING: '+str(i), 'channel0_at', 0, 1)
+		super_print('+SQNSRING: '+str(i)+' found!')
+		
+		time.sleep(0.4)
+		spec_comm = 'at+sqnsrecv=' + str(i) + ',1500' + r
+		to_UE('channel0_at',spec_comm)  
+		from_UE(3, 'OK', 'channel0_at', 0, 1)	
+
+		while not queue_at0.empty():
+			if queue_at0.get().find('+SQNSRECV') != -1:
+				recv_str = queue_at0.get()
+		clear_channel_queue()
+
+		super_print('Received string size on UE= ' + str(len(recv_str)))
+
+		if send_str == recv_str:
+			super_print('Strings are matched.')
+		else:
+			super_print('Received wrong string on ssl server side!')
+			super_print('Sending string = ')
+			uuu = ":".join("{:02x}".format(ord(c)) for c in send_str)
+			super_print(str(uuu))			
+			super_print('Received string = ')
+			uuu = ":".join("{:02x}".format(ord(c)) for c in recv_str)
+			super_print(str(uuu))			
+			sys.exit()
+
+def setlog_ncat_finest():
+	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
+	from_UE(2, '->', 'channel2_console', 0, 1)
+
+	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
+	from_UE(2, '->', 'channel2_console', 0, 1)
 
 try:
 
@@ -522,10 +658,18 @@ try:
 		log_console.write('Log from console\r\n')
 		super_print ('     Log file for console is created - ' + name_time + '_console.txt')
 
+	if ssl_server_log == 1:
+		for i in range(0,6):
+			arr_threads_log.append(open(name_time+'_ssl_server_' + str(i+1) + '.txt', 'w'))
+			arr_threads_log[i].write('Log from server '+ str(i+1)+'\r\n')
+			super_print ('     Log file for ssl server '+ str(i+1) +' is created - ' + name_time + '_ssl_server_'+ str(i+1) +'.txt')
+
+
 	if test_ipv4v6 == 1:
 		ssl_server = ssl_server_ipv6
 	else:
 		ssl_server = ssl_server_ipv4
+
 
 	if proto == 0:
 		super_print('\r\n')		
@@ -551,7 +695,6 @@ try:
 	if uart0_enable == 1:
 		channel0_at = serial.Serial(uart0_at, uart0_at_speed, timeout=0, parity=serial.PARITY_NONE)  # open serial port
 		super_print('     AT0 port = ' + channel0_at.name + ' speed = ' + str(uart0_at_speed) + ' rts = ' + str(channel0_at.rts))
-	
 	else:
 		channel0_at = None
 	
@@ -616,9 +759,7 @@ try:
 		thread_console.daemon = True # thread dies with the program
 		thread_console.start()
 		super_print('     Threads and queue for CONSOLE ...')			
-
 	super_print('     Done.')
-
 #====================================================================================================================
 
 #====================================================================================================================
@@ -666,13 +807,13 @@ try:
 #====================================================================================================================
 #	AT commands for NCAT SSL prepare
 #====================================================================================================================
-	ncat_info()
+	#ncat_info()
 	if proto == 0:
 		super_print('\r\n')		
 		sys.stdout.write('[' + timest() + '] ')
 		super_print('======================= NCAT SSL/TLS preparation =====================')
 
-		to_UE('channel0_at',comm_5 + str(os.path.getsize(str(file_rootCA_pem))+1) + r)  # ============== Upload cert rootCA.pem
+		to_UE('channel0_at',comm_5 + str(os.path.getsize(str(file_rootCA_pem))) + r)  # ============== Upload cert rootCA.pem
 		if from_UE(2, '>', 'channel0_at', 1, 1) == 1:
 			file_pem = open(str(file_rootCA_pem),'r')
 			to_UE('channel0_at',file_pem.read())
@@ -683,7 +824,7 @@ try:
 			else:
 				super_print('Upload cert fail.')
 				sys.exit()
-
+			from_UE(1, '', 'channel2_console', 0, 0)
 			to_UE('channel2_console',comm_7)
 			from_UE(2, '->', 'channel2_console', 1, 1)	
 		else:
@@ -718,28 +859,57 @@ try:
 #====================================================================================================================
 
 #====================================================================================================================
-#	Main loop
+#	Tests loop
 #====================================================================================================================	
-	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
-	from_UE(2, '->', 'channel2_console', 0, 1)
-
-	to_UE('channel2_console',comm_16)                       # =====   setlog ncat finest
-	from_UE(2, '->', 'channel2_console', 0, 1)
-
+	setlog_ncat_finest()
 	if proto == 0:
 		ssl_open_server(0)
-	
+
+	# ===================================== Test case 1 ===================================
+	super_print('====================================================================')
+	super_print('          TEST CASE 1 - CONNECT/DISCONNECT to server in loop')
+	super_print('====================================================================')
 	for i in range(1, test_iter+1):
 		super_print('====================================================================')
-		super_print('                      Test loop = ' + str(i))
+		super_print('                      Test case 1, loop = ' + str(i))
 		super_print('====================================================================')
-
 		test_case_1(proto)
-	
+	super_print('====================================================================')
+	super_print('                      Test case 1 ended suceed')
+	super_print('====================================================================')	
+	#======================================= End test case 1 ==============================
+
+
+	# ===================================== Test case 2 ===================================
+	super_print('====================================================================')
+	super_print('          TEST CASE 2 - Data transfer between UE/Server ')
+	super_print('====================================================================')
+	if proto == 1:
+		ssl_open_server(1)
+
+	# Open sockets on UE side
+	#ncat_info()
+	ncat_open_sockets(proto)
+	ncat_info()
+
+	for i in range(1, test_iter+1):
+		super_print('====================================================================')
+		super_print('                      Test case 2, loop = ' + str(i))
+		super_print('====================================================================')
+		test_case_2(proto)
+		time.sleep(2)
+
+	ncat_info()
+	ncat_close_sockets()
+
+	if proto == 1:          # For DTLS Secure renegotiation not supported in openssl, so reopen needed in each loop
+		ssl_close_server()
+	super_print('====================================================================')
+	super_print('                      Test case 2 ended suceed')
+	super_print('====================================================================')	
+	#======================================= End test case 2 ==============================
 	if proto == 0:
 		ssl_close_server()
-	
-
 
 #====================================================================================================================
 
@@ -757,10 +927,13 @@ finally:
 	if uart2_enable == 1 and not channel2_console.isOpen():
 		super_print('             CONSOLE is closed.')
 
-	super_print('         Close subpocesses ...')
-	ssl_close_server()
-
 	super_print('         Close log files ...')
+	if ssl_server_log == 1:
+		for i in range (0,6):
+			arr_threads_log[i].close()
+
+
+	ssl_close_server()
 
 	if uart0_log == 1:
 		log_at0.close()
