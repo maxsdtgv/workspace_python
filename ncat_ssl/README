@@ -2,10 +2,30 @@
 #  NCAT SSL Transparency testing framework  #
 #  Maksym Vysochinenko                      #
 #  2018-08-29                               #
-#  version 1 (ncat_ssl_v1.py)               #
+#  version 2 (ncat_ssl_v2.py)               #
+#  Python 2.7                               #
 #############################################
 
-The python script ncat_ssl.py provide endurance testing for NCAT software module with SSL encription. Main case is find mulfunctions during storing/restoring NCAT SSL sockets over LPM PSPM suspending/resuming process. Current version of the script supports TLS/DTLS protocols in IPv4 or IPv6 addressing scheme. Dedicated logging for AT0, AT1, CONSOLE channels and for terminal output is available. Log files will be saved at the same directory. To run the script, user have to define IPv4 or IPv6 addresses for local PC. To run the test compaign for SSL/TLS, generating KEY (.key) and Certificate (.pem) files are required, it could be done with next commands:
+BE CAREFULL!!! The main processing idea of this script is parsing texts responces from the UE, it would be different depends on branches. Current parsing patterns in the script oriented on master branch, for example 5.2.1.0.
+
+NCAT SSL Transparency automation test script version 2:
+ Main features:
+      - check for restoring sockets during PSPM suspend/resume in loop
+      - TLS/DTLS support in command mode
+      - based on certificate or preshared key auth supported
+      - IPv4/IPv6 support
+      - checking for FSM, netstat, infoall, sockets states in each loop of iteration, finest NCAT log added
+      - dedicated logging for AT0, AT1, CONSOLE channels
+      - logging for all openssl server sessions
+      - possibility to choose uarts for use
+      - data transfer over restored sockets
+      - only command mode supported
+
+ Version 2 is available:
+      git repo - ssh://git-share.sequans.com:29418/integration/tools/asw/m2m/gemalto_fit_tester/ncat_ssl
+
+
+The python 2.7 script ncat_ssl_v2.py provide endurance testing for NCAT software module with TLS/DTLS encription. Main case is find mulfunctions during storing/restoring NCAT SSL sockets over LPM PSPM suspending/resuming process. Current version of the script supports TLS/DTLS protocols in IPv4 or IPv6 addressing scheme. Dedicated logging for AT0, AT1, CONSOLE channels and for terminal output is available. Log files will be saved at the same directory. To run the script, user have to define IPv4 or IPv6 addresses for local PC. To run the test compaign for SSL/TLS, generating KEY (.key) and Certificate (.pem) files are required, it could be done with next commands:
 
 openssl genrsa -out rootCA.key 2048
 openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
@@ -17,16 +37,17 @@ Two files rootCA.key and rootCA.pem have to be placed at the same directory wher
 #====================================================================================================================
 proto = 1 			# define the protocol: 0 = tls, 1 = dtls
 logs = 1			# write logs to files: 1 = enable, 0 = disable 
-test_iter = 10 		# number of iterations for each test_case
-test_ipv4v6 = 1 	# addressing scheme: 0 = IPv4, 1 = IPv6
+test_iter = 4 		# number of iterations for each test_case
+test_ipv4v6 = 0 	# addressing scheme: 0 = IPv4, 1 = IPv6
+ssl_server_log = 1	# enable logging for all ssl servers
 
 uart0_enable = 1					# enable uart0 channel
 uart0_log = 1						# frite logs to file for uart0 channel
 uart0_at = "/dev/ttyXRUSB0"			# section for AT0 channel configuration
 uart0_at_speed = 921600
 
-uart1_enable = 0					# enable uart1 channel
-uart1_log = 0						# frite logs to file for uart1 channel
+uart1_enable = 1					# enable uart1 channel
+uart1_log = 1						# frite logs to file for uart1 channel
 uart1_at = "/dev/ttyXRUSB1"			# section for AT1 channel configuration
 uart1_at_speed = 921600
 
@@ -39,11 +60,12 @@ key_file_name = "rootCA.key"		# define name of the KEY file
 pem_file_name = "rootCA.pem"		# define name of the CERTIFICATE file
 
 ssl_server_ipv4 = "172.17.57.243"								# local IPv4 address to bind openssl server
-ssl_server_ipv6 = "2001:67c:2e5c:2033:64e3:78aa:9059:ea4e"		# local IPv6 address to bind openssl server
+ssl_server_ipv6 = "2001:67c:2e5c:2033:286d:f102:48e1:7abf"		# local IPv6 address to bind openssl server
 
 #====================================================================================================================
 
 Required libs for python:
+
 	serial
 	time
 	datetime
@@ -56,6 +78,5 @@ Required libs for python:
 	signal
 	pathlib
 	shlex
-
 Required apps on PC:
 	openssl
