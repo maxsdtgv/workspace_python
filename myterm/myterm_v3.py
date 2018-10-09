@@ -6,7 +6,7 @@ import serial
 import time
 import datetime
 
-port = "/dev/ttyXRUSB0"
+port = "/dev/ttyUSB1"
 speed = 921600
 
 time_o = 0

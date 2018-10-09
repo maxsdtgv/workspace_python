@@ -1,0 +1,12 @@
+################################################
+#  ver:    1
+#  author: Maksym Vysochinenko
+#  date:   9 oct 2018
+#  
+#  List of turns order to run campaign
+################################################
+
+tc01
+tc02
+tc03
+tc04

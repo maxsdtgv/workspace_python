@@ -639,8 +639,6 @@ def test_case_2(proto): # Sending data between UE and server
 
 	time.sleep(.5)
 
-
-
 def setlog_ncat_finest():
 	to_UE('channel2_console',comm_15)                    # =====   printlog 1 1
 	from_UE(2, '->', 'channel2_console', 0, 1)
