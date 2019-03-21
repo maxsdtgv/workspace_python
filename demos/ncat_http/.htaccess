@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_METHOD} ^(PUT|DELETE) [NC]
+RewriteRule .* processing_script.php

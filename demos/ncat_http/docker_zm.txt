@@ -1,0 +1,70 @@
+FROM ubuntu:latest
+MAINTAINER aws@sequans.com
+
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:labolabo' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication no/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+RUN apt install -y software-properties-common
+RUN add-apt-repository -y ppa:iconnor/zoneminder-1.32
+RUN apt update
+RUN apt install -y zoneminder
+RUN systemctl enable zoneminder
+RUN service zoneminder start
+RUN adduser www-data video
+RUN a2enconf zoneminder
+RUN a2enmod rewrite
+RUN chown -R www-data:www-data /usr/share/zoneminder/
+RUN service apache2 reload
+
+EXPOSE 22 80
+
+CMD ["/usr/sbin/sshd", "-D"]
+
+
+apt install -y software-properties-common
+add-apt-repository -y ppa:iconnor/zoneminder-1.32
+apt update
+apt-get install -y mysql-server apache2 php libapache2-mod-php php-mysql zoneminder
+
+
+adduser www-data
+chmod 740 /etc/zm/zm.conf
+chown root:www-data /etc/zm/zm.conf
+chown -R www-data:www-data /usr/share/zoneminder
+
+a2enconf zoneminder
+a2enmod cgi
+a2enmod rewrite
+
+echo "date.timezone = $PHP_TIMEZONE" >> /etc/php/7.2/apache2/php.ini
+/etc/init.d/mysql start
+mysql -u root < /usr/share/zoneminder/db/zm_create.sql
+mysql -u root -e "GRANT ALL ON zm.* to 'zmuser'@localhost identified by 'zmpass';"
+mysqladmin reload
+systemctl enable zoneminder
+
+/etc/init.d/apache2 restart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
