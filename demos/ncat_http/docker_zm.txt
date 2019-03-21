@@ -28,7 +28,7 @@ CMD ["/usr/sbin/sshd", "-D"]
 apt install -y software-properties-common
 add-apt-repository -y ppa:iconnor/zoneminder-1.32
 apt update
-apt-get install -y mysql-server apache2 php libapache2-mod-php php-mysql zoneminder
+apt-get install -y mariadb-server apache2 php libapache2-mod-php php-mysql zoneminder
 
 
 adduser www-data
@@ -40,14 +40,14 @@ a2enconf zoneminder
 a2enmod cgi
 a2enmod rewrite
 
-echo "date.timezone = $PHP_TIMEZONE" >> /etc/php/7.2/apache2/php.ini
-/etc/init.d/mysql start
+echo "date.timezone = Eurpe/Kiev" >> /etc/php/7.2/apache2/php.ini
+service mysql start
+mysql_secure_installation
 mysql -u root < /usr/share/zoneminder/db/zm_create.sql
 mysql -u root -e "GRANT ALL ON zm.* to 'zmuser'@localhost identified by 'zmpass';"
 mysqladmin reload
 systemctl enable zoneminder
-
-/etc/init.d/apache2 restart
+service apache2 restart
 
 
 
